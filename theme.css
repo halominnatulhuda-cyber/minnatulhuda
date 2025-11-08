@@ -1,12 +1,10 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME.CSS - Premium International Educational Design System
    Pesantren & Sekolah Minnatul Huda
-   
-   Research-Based Color Palette:
+
+   Updated Color Palette:
    - Green (primary): Islamic tradition, growth, harmony
-   - Red/Orange (accent): Warmth, energy from logo
-   - Yellow (highlight): Optimism, enlightenment
-   
+   - Teal (accent): Calm, modern, professional harmony
    Typography: Poppins (modern) + Open Sans (readable)
    Design Philosophy: Clean, minimal, professional, accessible
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -20,11 +18,11 @@
   --primary-dark: #053826;      /* Dark green - depth */
   --primary-soft: #E7F7EF;      /* Soft green background */
   
-  /* ─── Accent Colors (From Logo - Warmth & Energy) ─── */
-  --secondary: #C62828;         /* Deep red - passion, excellence */
-  --secondary-light: #EF5350;   /* Light red - highlight */
-  --accent: #F9A825;            /* Golden yellow - enlightenment */
-  --accent-orange: #FF6F00;     /* Orange - vitality */
+  /* ─── Accent Colors (Updated to Teal Harmony) ─── */
+  --secondary: #329D9C;         /* Teal - professional balance */
+  --secondary-light: #56C596;   /* Light teal - freshness */
+  --accent: #329D9C;            /* Unified accent tone */
+  --accent-teal: #7BE495;       /* Soft bright accent */
   
   /* ─── Neutral Palette (Modern, Clean) ─── */
   --white: #FFFFFF;
@@ -42,25 +40,25 @@
   --text-muted: #5C616E;
   
   /* ─── Semantic Colors ─── */
-  --success: #2E7D32;
-  --warning: #F57C00;
-  --error: #C62828;
-  --info: #0288D1;
+  --success: #14A76C;
+  --warning: #56C596;
+  --error: #205072;
+  --info: #329D9C;
   
   /* ─── Typography ─── */
   --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-secondary: 'Open Sans', Arial, sans-serif;
   --font-arabic: 'Amiri', serif;
   
-  --font-size-xs: 0.75rem;      /* 12px */
-  --font-size-sm: 0.875rem;     /* 14px */
-  --font-size-base: 1rem;       /* 16px */
-  --font-size-lg: 1.125rem;     /* 18px */
-  --font-size-xl: 1.25rem;      /* 20px */
-  --font-size-2xl: 1.5rem;      /* 24px */
-  --font-size-3xl: 1.875rem;    /* 30px */
-  --font-size-4xl: 2.25rem;     /* 36px */
-  --font-size-5xl: 3rem;        /* 48px */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
   
   --font-weight-light: 300;
   --font-weight-normal: 400;
@@ -74,28 +72,28 @@
   --line-height-relaxed: 1.75;
   
   /* ─── Spacing Scale (8px base) ─── */
-  --space-1: 0.25rem;  /* 4px */
-  --space-2: 0.5rem;   /* 8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-5: 1.25rem;  /* 20px */
-  --space-6: 1.5rem;   /* 24px */
-  --space-8: 2rem;     /* 32px */
-  --space-10: 2.5rem;  /* 40px */
-  --space-12: 3rem;    /* 48px */
-  --space-16: 4rem;    /* 64px */
-  --space-20: 5rem;    /* 80px */
-  --space-24: 6rem;    /* 96px */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
   
   /* ─── Border Radius (Premium Curves) ─── */
-  --radius-sm: 0.25rem;   /* 4px */
-  --radius-md: 0.5rem;    /* 8px */
-  --radius-lg: 0.75rem;   /* 12px */
-  --radius-xl: 1rem;      /* 16px */
-  --radius-2xl: 1.5rem;   /* 24px */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
   --radius-full: 9999px;
   
-  /* ─── Shadows (Subtle, No Heavy Shadows on Nav) ─── */
+  /* ─── Shadows (Subtle, Clean) ─── */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
@@ -120,15 +118,8 @@
   --z-tooltip: 1060;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BASE STYLES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Base Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
   font-size: 16px;
@@ -137,122 +128,52 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 body {
   font-family: var(--font-secondary);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
   color: var(--text);
   background-color: var(--neutral-50);
+  line-height: var(--line-height-normal);
   overflow-x: hidden;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   TYPOGRAPHY SYSTEM
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-primary);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
   color: var(--text);
   margin-bottom: var(--space-4);
-  letter-spacing: -0.02em;
+  line-height: var(--line-height-tight);
 }
-
-h1 {
-  font-size: var(--font-size-5xl);
-  font-weight: var(--font-weight-extrabold);
-}
-
-h2 {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-}
-
-h3 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
-}
-
-h4 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-}
-
-h5 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-medium);
-}
-
-h6 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-}
-
+h1 { font-size: var(--font-size-5xl); }
+h2 { font-size: var(--font-size-4xl); }
+h3 { font-size: var(--font-size-3xl); }
 p {
-  margin-bottom: var(--space-4);
   color: var(--text-muted);
   line-height: var(--line-height-relaxed);
 }
 
+/* Links */
 a {
-  color: var(--primary);
+  color: var(--secondary);
   text-decoration: none;
   transition: color var(--transition-base);
 }
-
 a:hover {
-  color: var(--primary-light);
+  color: var(--secondary-light);
 }
 
-a:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   UTILITY CLASSES
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Text Colors */
+/* Utilities */
 .text-primary { color: var(--primary) !important; }
-.text-secondary { color: var(--secondary) !important; }
 .text-accent { color: var(--accent) !important; }
-.text-muted { color: var(--text-muted) !important; }
-.text-white { color: var(--white) !important; }
-
-/* Background Colors */
 .bg-primary { background-color: var(--primary) !important; }
-.bg-primary-soft { background-color: var(--primary-soft) !important; }
-.bg-secondary { background-color: var(--secondary) !important; }
-.bg-accent { background-color: var(--accent) !important; }
-.bg-white { background-color: var(--white) !important; }
-.bg-neutral { background-color: var(--neutral-50) !important; }
+.bg-accent { background-color: var(--accent-teal) !important; }
 
-/* Gradient Backgrounds */
-.bg-gradient-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+/* Gradients */
+.bg-gradient-teal {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
 }
-
-.bg-gradient-warm {
-  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent) 100%);
-}
-
-.bg-gradient-islamic {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+.bg-gradient-harmony {
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-teal));
 }
 
 /* Text Alignment */
