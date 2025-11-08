@@ -1,0 +1,19 @@
+{
+  "name": "minnatul-huda-website",
+  "version": "1.0.0",
+  "description": "Static website for Pesantren & Sekolah Minnatul Huda - Islamic boarding school with modern enhancements",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 5000",
+    "dev": "python3 -m http.server 5000"
+  },
+  "keywords": [
+    "pesantren",
+    "islamic-school",
+    "minnatul-huda",
+    "static-website",
+    "educational-institution"
+  ],
+  "author": "Minnatul Huda Team",
+  "license": "MIT"
+}

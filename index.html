@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beranda - Minnatul Huda</title>
+<!-- Favicon dari URL eksternal -->
+<link rel="icon" type="image/png" href="https://images.vexels.com/media/users/3/142810/isolated/preview/ba0c22cef0e0d4a277d74333536482d9-shield-emblem-logo.png">
+  <!-- Menggunakan path relatif agar kompatibel di GitHub Pages -->
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="enhancers.css">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/4hdcTD7.png">
+</head>
+<body>
+  <!-- Skip to Content Link (Accessibility) -->
+  <a href="#main-content" class="skip-to-content">Langsung ke konten utama</a>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay"></div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="Beranda.html" class="site-logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/>
+        </svg>
+        <span>Minnatul Huda</span>
+      </a>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg class="hamburger-icon" viewBox="0 0 24 24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="Beranda.html" class="nav-link active">Beranda</a></li>
+          <li class="nav-item dropdown">
+            <a href="tentang.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Tentang</a>
+            <div class="dropdown-menu">
+              <a href="tentang.html#profil">Profil</a>
+              <a href="tentang.html#visi-misi">Visi & Misi</a>
+              <a href="tentang.html#sejarah">Sejarah</a>
+              <a href="tentang.html#kurikulum-pesantren">Kurikulum Pesantren</a>
+              <a href="tentang.html#kurikulum-formal">Kurikulum Formal</a>
+              <a href="tentang.html#tim-kami">Tim Kami</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Prestasi</a>
+            <div class="dropdown-menu">
+              <a href="prestasi-santri.html">Prestasi Santri</a>
+              <a href="prestasi-yayasan.html">Prestasi Yayasan</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Unit</a>
+            <div class="dropdown-menu">
+              <a href="unit-yayasan.html">Yayasan/Ponpes</a>
+              <a href="unit-sd-it.html">SD IT</a>
+              <a href="unit-smp-bp.html">SMP BP</a>
+              <a href="unit-smk.html">SMK</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Galeri</a>
+            <div class="dropdown-menu">
+              <a href="galeri-fasilitas.html">Fasilitas</a>
+              <a href="galeri-event.html">Event</a>
+              <a href="galeri-lainnya.html">Lainnya</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Daftar</a>
+            <div class="dropdown-menu">
+              <a href="daftar-pendaftaran.html">Pendaftaran</a>
+              <a href="daftar-biaya.html">Informasi Biaya</a>
+              <a href="daftar-ketentuan.html">Ketentuan Pendaftaran</a>
+            </div>
+          </li>
+          <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+          <li class="nav-item"><a href="#" class="nav-link external">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <section class="hero-slider">
+      <div class="slider-track"></div>
+      <div class="slider-controls">
+        <button class="slider-btn slider-prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+        <div class="slider-pagination"></div>
+        <button class="slider-btn slider-next" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Program Unggulan</p>
+          <h2 class="section-title">Program Pendidikan Kami</h2>
+          <p class="section-description">Berbagai program pendidikan berkualitas yang memadukan nilai-nilai Islam dengan pendidikan formal modern</p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+            <div class="card-content">
+              <h3 class="card-title">Tahfidz Al-Qur'an</h3>
+              <p class="card-text">Program hafalan Al-Qur'an dengan metode terbukti dan pembimbing berpengalaman</p>
+            </div>
+          </div>
+          <div class="card">
+            <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <div class="card-content">
+              <h3 class="card-title">Pendidikan Akhlak</h3>
+              <p class="card-text">Pembentukan karakter dan akhlak mulia berbasis nilai-nilai Islami</p>
+            </div>
+          </div>
+          <div class="card">
+            <svg class="card-icon" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 11-6-11-6z"/></svg>
+            <div class="card-content">
+              <h3 class="card-title">Kurikulum Nasional</h3>
+              <p class="card-text">Mengikuti kurikulum nasional dengan standar pendidikan modern</p>
+            </div>
+          </div>
+          <div class="card">
+            <svg class="card-icon" viewBox="0 0 24 24"><path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+            <div class="card-content">
+              <h3 class="card-title">Ekstrakurikuler</h3>
+              <p class="card-text">Berbagai kegiatan untuk mengembangkan bakat dan minat santri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="grid grid-2">
+          <div>
+            <h2>Tentang Minnatul Huda</h2>
+            <p>Pesantren & Sekolah Minnatul Huda adalah lembaga pendidikan Islam yang memadukan pendidikan pesantren tradisional dengan sistem pendidikan formal modern. Kami berkomitmen mencetak generasi berakhlak mulia, berilmu, dan berprestasi.</p>
+            <p>Dengan tenaga pengajar berkualitas dan fasilitas memadai, kami menyediakan lingkungan belajar kondusif untuk mengembangkan potensi santri.</p>
+            <a href="tentang.html#profil" class="btn btn-primary">Lihat Selengkapnya</a>
+          </div>
+          <div class="grid grid-2">
+            <img src="https://placehold.co/300x300/0B6E4F/FFFFFF?text=Kiyai" alt="Kiyai Minnatul Huda" style="width: 100%; border-radius: var(--radius-lg);">
+            <img src="https://placehold.co/300x300/14A76C/FFFFFF?text=Santri+Berprestasi" alt="Santri Berprestasi" style="width: 100%; border-radius: var(--radius-lg);">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="kontak">
+    <div class="footer-main">
+      <div class="footer-section">
+        <h3>Minnatul Huda</h3>
+        <p>Pesantren & Sekolah Islam Terpadu yang berkomitmen mencetak generasi Qur'ani, berakhlak mulia, dan berprestasi.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Tautan Cepat</h3>
+        <ul class="footer-links">
+          <li><a href="Beranda.html">Beranda</a></li>
+          <li><a href="tentang.html">Tentang Kami</a></li>
+          <li><a href="prestasi-santri.html">Prestasi</a></li>
+          <li><a href="galeri-fasilitas.html">Galeri</a></li>
+          <li><a href="daftar-pendaftaran.html">Pendaftaran</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Kontak Kami</h3>
+        <p>Jl. Pendidikan No. 123<br>Kota, Provinsi 12345</p>
+        <p>Telp: (021) 12345678<br>WA: 0812-3456-7890</p>
+        <p>Email: info@minnatulhuda.sch.id</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Pesantren & Sekolah Minnatul Huda. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Script untuk memuat data -->
+  <script>
+    fetch("data.json")
+      .then(res => res.json())
+      .then(data => console.log("Data JSON berhasil dimuat:", data))
+      .catch(err => console.warn(err));
+  </script>
+
+  <!-- Script utama -->
+  <script src="script.js"></script>
+  <script src="enhancers.js"></script>
+</body>
+</html>
+
