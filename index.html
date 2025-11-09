@@ -21,6 +21,7 @@
   <div class="mobile-overlay"></div>
 
   <!-- ================= HEADER & NAVIGATION ================= -->
+<!-- Header & Navigation -->
   <header class="site-header">
     <div class="header-container">
       <a href="index.html" class="site-logo">
@@ -38,9 +39,9 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <ul class="nav-list">
-          <li><a href="index.html" class="nav-link active">Beranda</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">Beranda</a></li>
           <li class="nav-item dropdown">
-            <a href="tentang.html" class="nav-link dropdown-toggle">Tentang</a>
+            <a href="tentang.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Tentang</a>
             <div class="dropdown-menu">
               <a href="tentang.html#profil">Profil</a>
               <a href="tentang.html#visi-misi">Visi & Misi</a>
@@ -51,14 +52,14 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle">Prestasi</a>
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Prestasi</a>
             <div class="dropdown-menu">
               <a href="prestasi-santri.html">Prestasi Santri</a>
               <a href="prestasi-yayasan.html">Prestasi Yayasan</a>
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle">Unit</a>
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Unit</a>
             <div class="dropdown-menu">
               <a href="unit-yayasan.html">Yayasan/Ponpes</a>
               <a href="unit-sd-it.html">SD IT</a>
@@ -67,7 +68,7 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle">Galeri</a>
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Galeri</a>
             <div class="dropdown-menu">
               <a href="galeri-fasilitas.html">Fasilitas</a>
               <a href="galeri-event.html">Event</a>
@@ -75,20 +76,19 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle">Daftar</a>
+            <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">Daftar</a>
             <div class="dropdown-menu">
               <a href="daftar-pendaftaran.html">Pendaftaran</a>
               <a href="daftar-biaya.html">Informasi Biaya</a>
               <a href="daftar-ketentuan.html">Ketentuan Pendaftaran</a>
             </div>
           </li>
-          <li><a href="#kontak" class="nav-link">Kontak</a></li>
-          <li><a href="#" class="nav-link external">Login</a></li>
+          <li class="nav-item"><a href="#kontak" class="nav-link">Kontak</a></li>
+          <li class="nav-item"><a href="#" class="nav-link external">Login</a></li>
         </ul>
       </nav>
     </div>
   </header>
-
   <!-- ================= BANNER / HERO SLIDER ================= -->
   <main id="main-content">
     <section class="hero-slider">
@@ -279,3 +279,4 @@
   <script src="enhancers.js"></script>
 </body>
 </html>
+
