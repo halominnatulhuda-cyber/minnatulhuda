@@ -9,12 +9,10 @@
 
 :root {
   /* Warna Utama - WAJIB PERSIS */
-  --primary: #205072;
-  --accent: #329D9C;
-  --soft: #CFF4D2;
-  --dark: #1A3F57;
-  --secondary: #56C596;    /* Hijau Cerah */
-  --secondary-light: #7BE495; /* Hijau Muda */
+  --primary: #0B6E4F;
+  --accent: #14A76C;
+  --soft: #E7F7EF;
+  --dark: #053826;
   --text: #0F172A;
   
   /* Warna Tambahan */
@@ -236,9 +234,7 @@ a:focus-visible {
   fill: var(--primary);
 }
 
-
-
-/* === NAVIGASI DESKTOP === */
+/* Navigation Desktop */
 .main-nav {
   display: flex;
   align-items: center;
@@ -250,8 +246,6 @@ a:focus-visible {
   list-style: none;
   gap: var(--spacing-sm);
   align-items: center;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-item {
@@ -262,12 +256,11 @@ a:focus-visible {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
-  padding: 0.6rem 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
   color: var(--text);
   font-weight: 500;
   border-radius: var(--radius-md);
-  text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .nav-link:hover,
@@ -276,27 +269,22 @@ a:focus-visible {
   color: var(--primary);
 }
 
-/* Active menu minimalis */
 .nav-link.active {
   background-color: var(--primary);
-  color: #fff;
+  color: var(--white);
 }
 
-/* Tombol eksternal (Login) dibuat solid tapi tidak berlebihan */
 .nav-link.external {
   background-color: var(--accent);
-  color: #fff;
-  font-weight: 600;
-  border-radius: var(--radius-md);
+  color: var(--white);
 }
 
-.nav-link.external:hover,
-.nav-link.external:focus {
+.nav-link.external:hover {
   background-color: var(--primary);
-  color: #fff;
+  color: var(--white);
 }
 
-/* === DROPDOWN === */
+/* Dropdown */
 .dropdown {
   position: relative;
 }
@@ -306,12 +294,12 @@ a:focus-visible {
   display: inline-block;
   width: 0;
   height: 0;
-  margin-left: 0.4rem;
+  margin-left: var(--spacing-xs);
   vertical-align: middle;
   border-top: 4px solid currentColor;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-fast);
 }
 
 .dropdown:hover .dropdown-toggle::after,
@@ -323,17 +311,17 @@ a:focus-visible {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 200px;
-  background: #fff;
+  min-width: 220px;
+  background: var(--white);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  margin-top: 0.5rem;
+  box-shadow: var(--shadow-xl);
+  margin-top: var(--spacing-sm);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(5px);
-  transition: all 0.2s ease;
+  transform: translateY(-10px);
+  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
   z-index: var(--z-dropdown);
-  padding: 0.25rem 0;
+  padding: var(--spacing-sm);
 }
 
 .dropdown:hover .dropdown-menu,
@@ -345,11 +333,10 @@ a:focus-visible {
 
 .dropdown-menu a {
   display: block;
-  padding: 0.6rem 1rem;
+  padding: var(--spacing-sm) var(--spacing-md);
   color: var(--text);
-  text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
   border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
 }
 
 .dropdown-menu a:hover,
@@ -358,21 +345,26 @@ a:focus-visible {
   color: var(--primary);
 }
 
-/* === TOGGLE MENU MOBILE === */
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
   background: none;
   border: none;
-  padding: 0.5rem;
+  padding: var(--spacing-sm);
   cursor: pointer;
   color: var(--text);
-  z-index: 10000;
-  transition: color 0.2s ease;
+  transition: color var(--transition-base);
 }
 
 .mobile-menu-toggle:hover,
 .mobile-menu-toggle:focus {
   color: var(--primary);
+}
+
+.mobile-menu-toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 .hamburger-icon {
@@ -381,12 +373,12 @@ a:focus-visible {
   fill: currentColor;
 }
 
-/* === NAVIGASI MOBILE === */
+/* Mobile Navigation */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
   }
-
+  
   .main-nav {
     position: fixed;
     top: 0;
@@ -394,51 +386,51 @@ a:focus-visible {
     width: 80%;
     max-width: 320px;
     height: 100vh;
-    background: #fff;
+    background: var(--white);
     box-shadow: var(--shadow-xl);
-    padding: 2rem 1.5rem;
-    transition: right 0.3s ease;
+    padding: var(--spacing-xl);
+    transition: right var(--transition-slow);
     overflow-y: auto;
     z-index: var(--z-modal);
   }
-
+  
   .main-nav.active {
     right: 0;
   }
-
+  
   .nav-list {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: stretch;
+    gap: var(--spacing-sm);
   }
-
+  
   .nav-link {
     width: 100%;
-    padding: 0.75rem 1rem;
   }
-
+  
   .dropdown-menu {
     position: static;
     opacity: 1;
     visibility: visible;
     transform: none;
     box-shadow: none;
-    margin: 0.25rem 0 0 1rem;
+    margin-top: var(--spacing-sm);
+    margin-left: var(--spacing-md);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.25s ease;
+    transition: max-height var(--transition-base);
   }
-
+  
   .dropdown.active .dropdown-menu {
     max-height: 500px;
   }
-
+  
   .dropdown-toggle::after {
     margin-left: auto;
   }
 }
 
-/* === MOBILE OVERLAY === */
+/* Mobile Overlay */
 .mobile-overlay {
   display: none;
   position: fixed;
@@ -449,41 +441,13 @@ a:focus-visible {
   background: rgba(0, 0, 0, 0.5);
   z-index: calc(var(--z-modal) - 1);
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-base);
 }
 
 .mobile-overlay.active {
   display: block;
   opacity: 1;
-  pointer-events: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ───────────────────────────────────────────────────────────────────────────
    HERO BANNER SLIDER
@@ -1128,97 +1092,4 @@ a:focus-visible {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.lightbox.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-.lightbox-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-}
-.lightbox-content img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  display: block;
-}
-.lightbox-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-/* ───────────────────────────────────────────────────────────────────────────
-   PERBAIKAN JARAK TEKS DAN TOMBOL DI HERO / BERANDA
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.slider-content p {
-  margin-bottom: var(--spacing-lg); /* tambahkan jarak bawah */
-}
-
-@media (max-width: 768px) {
-  .slider-content p {
-    margin-bottom: var(--spacing-md); /* sedikit lebih rapat di layar kecil */
-  }
-}
-
-/* ───────────────────────────────────────────────────────────────────────────
-   RESPONSIVE GRID IMPROVEMENTS
-   ─────────────────────────────────────────────────────────────────────────── */
-
-/* Program Grid - 4 columns desktop, 2x2 mobile */
-#programs-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-xl);
-}
-
-@media (max-width: 1024px) {
-  #programs-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  #programs-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* News Grid - 3 columns */
-#news-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-xl);
-}
-
-@media (max-width: 1024px) {
-  #news-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  #news-container {
-    grid-template-columns: 1fr;
-  }
 }
