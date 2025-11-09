@@ -21,7 +21,7 @@ Preferred communication style: Simple, everyday language.
 - Responsive design using CSS Grid and Flexbox
 
 **File Organization:**
-- **HTML Pages**: Multiple page types including home (Beranda.html/index.html), about (tentang.html), unit pages (unit-*.html), achievement pages (prestasi-*.html), gallery pages (galeri-*.html), and registration pages (daftar-*.html)
+- **HTML Pages**: Multiple page types including home (beranda.html/index.html), about (tentang.html), unit pages (unit-*.html), achievement pages (prestasi-*.html), gallery pages (galeri-*.html), and registration pages (daftar-*.html)
 - **Core Stylesheets**: 
   - `styles.css` - Main stylesheet (marked as DO NOT MODIFY)
   - `enhancers.css` - Enhancement styles for modern interactive features
