@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta http-equiv="Access-Control-Allow-Origin" content="*">
-  <base href="./">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beranda - Minnatul Huda</title>
@@ -16,6 +13,22 @@
   <link rel="stylesheet" href="./theme.css">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./enhancers.css">
+
+<!-- Inline fixes for gallery & testimonials to ensure visibility and styling -->
+<style>
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
+.gallery-item { position: relative; overflow: hidden; border-radius: var(--radius-lg,12px); background:#f6f6f6; }
+.gallery-item img { display:block; width:100%; height:220px; object-fit:cover; transition: transform .4s ease; }
+.gallery-item:hover img { transform: scale(1.03); }
+.gallery-overlay { position:absolute; inset:0; background: rgba(0,0,0,0.6); color:#fff; padding:1rem; opacity:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; transition: opacity .25s ease; }
+.gallery-item:hover .gallery-overlay { opacity:1; }
+.form input, .form textarea, .form select { font-family: inherit; box-sizing: border-box; }
+.testimonial-card { background: #fff; padding:1rem; border-radius: var(--radius-md,8px); box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.08)); margin-bottom:1rem; }
+.testimonial-rating { font-size: 1rem; margin-bottom: 0.5rem; color: #f6b228; }
+.testimonial-meta { font-weight:600; margin-bottom:0.25rem; }
+#testimonial-container { margin-bottom: 1.5rem; }
+</style>
+
 </head>
 <body>
   <!-- Skip to Content -->
@@ -219,32 +232,30 @@
       <!-- Form Testimoni -->
       <div class="testimonial-form-wrapper" style="margin-top: 3rem; max-width: 600px; margin: auto;">
         <h3 style="text-align: center;">Bagikan Testimoni Anda</h3>
-        <form id="testimonial-form" class="form" style="background: white; padding: 2rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-md);">
-          <div class="form-group">
-            <label for="testi-name">Nama Lengkap</label>
-            <input type="text" id="testi-name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="testi-role">Status</label>
-            <input type="text" id="testi-role" name="role" placeholder="Wali Santri/Alumni/Lainnya" required>
-          </div>
-          <div class="form-group">
-            <label for="testi-comment">Testimoni</label>
-            <textarea id="testi-comment" name="comment" rows="4" required></textarea>
-          </div>
-          <div class="form-group">
-            <label>Rating</label>
-            <div class="star-rating" id="star-rating-container" role="radiogroup" aria-label="Rating">
-              <span class="star" data-rating="1" role="radio" aria-checked="false" tabindex="0">★</span>
-              <span class="star" data-rating="2" role="radio" aria-checked="false" tabindex="0">★</span>
-              <span class="star" data-rating="3" role="radio" aria-checked="false" tabindex="0">★</span>
-              <span class="star" data-rating="4" role="radio" aria-checked="false" tabindex="0">★</span>
-              <span class="star" data-rating="5" role="radio" aria-checked="false" tabindex="0">★</span>
-            </div>
-            <input type="hidden" id="testi-rating" name="rating" required value="">
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Kirim Testimoni</button>
-        </form>
+        <form id="testimonial-form" class="form" style="background: white; padding: 2rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-md);"><div class="form-group" style="margin-bottom: 1rem;">
+  <label for="testi-name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Nama Lengkap</label>
+  <input type="text" id="testi-name" name="name" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+</div>
+<div class="form-group" style="margin-bottom: 1rem;">
+  <label for="testi-role" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Status</label>
+  <input type="text" id="testi-role" name="role" placeholder="Wali Santri/Alumni/Lainnya" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+</div>
+<div class="form-group" style="margin-bottom: 1rem;">
+  <label for="testi-comment" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Testimoni</label>
+  <textarea id="testi-comment" name="comment" rows="4" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);"></textarea>
+</div>
+<div class="form-group focused" style="margin-bottom: 1rem;">
+  <label for="testi-rating" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Rating</label>
+  <select id="testi-rating" name="rating" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+    <option value="5">⭐⭐⭐⭐⭐ (Sangat Puas)</option>
+    <option value="4">⭐⭐⭐⭐ (Puas)</option>
+    <option value="3">⭐⭐⭐ (Cukup)</option>
+    <option value="2">⭐⭐ (Kurang)</option>
+    <option value="1">⭐ (Sangat Kurang)</option>
+  </select>
+</div>
+<button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1rem;">Kirim Testimoni</button>
+</form>
       </div>
     </div>
   </section>
@@ -281,6 +292,224 @@
   <!-- Script -->
   <script src="./script.js"></script>
   <script src="./enhancers.js"></script>
+
+  <!-- Embedded site data (fallback to avoid CORS when opening via file://) -->
+  <script id="site-data" type="application/json">
+{
+  "settings": {
+    "loginUrl": "https://login.pesantrenminnatulhuda.com",
+    "siteName": "Pesantren & Sekolah Minnatul Huda",
+    "siteDescription": "Pendidikan Islam Berkualitas dengan Akhlak Mulia",
+    "contactPhone": "(021) 12345678",
+    "contactWhatsApp": "0812-3456-7890",
+    "contactEmail": "info@minnatulhuda.sch.id",
+    "address": "Jl. Pendidikan No. 123, Kota, Provinsi 12345"
+  },
+
+  "forms": {
+    "telegram": {
+      "botToken": "YOUR_BOT_TOKEN_HERE",
+      "chatId": "YOUR_CHAT_ID_HERE"
+    }
+  },
+
+  "statistics": {
+    "total_students": 1250,
+    "total_alumni": 3500,
+    "total_teachers": 85,
+    "total_staff": 35,
+    "tahfidz_graduates": 450,
+    "achievements": 127
+  },
+
+  "sliderImages": [
+    {
+      "src": "https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop",
+      "alt": "Banner 1 - Pesantren Minnatul Huda",
+      "title": "Selamat Datang di Minnatul Huda",
+      "description": "Pendidikan Islami Berkualitas dengan Akhlak Mulia"
+    },
+    {
+      "src": "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop",
+      "alt": "Banner 2 - Pendidikan Berkualitas",
+      "title": "Pendidikan Berkualitas",
+      "description": "Memadukan Kurikulum Pesantren dan Formal"
+    },
+    {
+      "src": "https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop",
+      "alt": "Banner 3 - Fasilitas Modern",
+      "title": "Fasilitas Modern",
+      "description": "Lingkungan Belajar yang Nyaman dan Kondusif"
+    }
+  ],
+
+  "programs": [
+    {
+      "id": 1,
+      "title": "Tahfidz Al-Qur'an",
+      "description": "Program hafalan Al-Qur'an dengan metode talaqqi dan muraja'ah intensif. Target hafalan disesuaikan dengan kemampuan santri dengan bimbingan guru hafidz berpengalaman.",
+      "images": [
+        "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5212320/pexels-photo-5212320.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      "youtube": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "features": [
+        "Metode Talaqqi Individual",
+        "Muraja'ah Terjadwal",
+        "Target 30 Juz",
+        "Pembimbing Berpengalaman"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Pendidikan Akhlak",
+      "description": "Pembentukan karakter dan akhlak mulia berbasis nilai-nilai Islam melalui keteladanan, pembiasaan, dan bimbingan personal dari para ustadz.",
+      "images": [
+        "https://images.pexels.com/photos/8364026/pexels-photo-8364026.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/8088495/pexels-photo-8088495.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      "features": [
+        "Pembinaan Akhlak Harian",
+        "Keteladanan Ustadz",
+        "Praktik Ibadah Langsung",
+        "Bimbingan Personal"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Kurikulum Nasional",
+      "description": "Mengikuti kurikulum nasional terbaru dengan standar pendidikan modern, memastikan santri siap menghadapi tantangan akademik di tingkat nasional.",
+      "images": [
+        "https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5212703/pexels-photo-5212703.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      "features": [
+        "Kurikulum K-13 & Merdeka",
+        "Pembelajaran Digital",
+        "Praktikum Laboratorium",
+        "Ujian Terstandar"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Ekstrakurikuler",
+      "description": "Berbagai kegiatan ekstrakurikuler seperti pramuka, olahraga, seni, dan keterampilan untuk mengembangkan bakat dan minat santri.",
+      "images": [
+        "https://images.pexels.com/photos/296301/pexels-photo-296301.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/10375880/pexels-photo-10375880.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      "features": [
+        "Pramuka & Kepemimpinan",
+        "Olahraga & Kesehatan",
+        "Seni & Budaya Islam",
+        "Keterampilan & Wirausaha"
+      ]
+    }
+  ],
+
+  "news": [
+    {
+      "id": 1,
+      "title": "Peringatan Maulid Nabi Muhammad SAW 2025",
+      "excerpt": "Pesantren Minnatul Huda menggelar peringatan Maulid Nabi dengan berbagai kegiatan islami...",
+      "content": "Pesantren Minnatul Huda menggelar peringatan Maulid Nabi Muhammad SAW dengan meriah. Kegiatan diikuti oleh seluruh santri, guru, dan wali santri. Acara dimulai dengan pembacaan sholawat, ceramah agama, dan lomba-lomba islami. Kegiatan ini bertujuan untuk memupuk kecintaan santri kepada Rasulullah SAW dan meneladani akhlak beliau.",
+      "image": "https://images.pexels.com/photos/8088495/pexels-photo-8088495.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "date": "2025-09-15",
+      "category": "Event"
+    },
+    {
+      "id": 2,
+      "title": "Santri Raih Juara Tahfidz Tingkat Nasional",
+      "excerpt": "Membanggakan! Santri Minnatul Huda berhasil meraih juara 1 lomba tahfidz 30 juz...",
+      "content": "Ahmad Fauzi, santri kelas 6 berhasil meraih juara 1 dalam Lomba Tahfidz Al-Qur'an 30 Juz tingkat nasional yang diselenggarakan di Jakarta. Prestasi ini membuktikan kualitas pembinaan tahfidz di Pesantren Minnatul Huda yang konsisten dan terstruktur.",
+      "image": "https://images.pexels.com/photos/5212320/pexels-photo-5212320.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "date": "2025-08-10",
+      "category": "Prestasi"
+    },
+    {
+      "id": 3,
+      "title": "Pendaftaran Santri Baru Tahun Ajaran 2025/2026",
+      "excerpt": "Pendaftaran santri baru telah dibuka untuk tahun ajaran mendatang dengan kuota terbatas...",
+      "content": "Pesantren Minnatul Huda membuka pendaftaran santri baru untuk tahun ajaran 2025/2026. Tersedia program SD IT, SMP BP, SMK, dan Pondok Pesantren. Pendaftaran dibuka mulai Januari hingga Juni 2025. Info lengkap dapat diakses melalui website atau hubungi kontak kami.",
+      "image": "https://images.pexels.com/photos/5212703/pexels-photo-5212703.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "date": "2025-01-05",
+      "category": "Pendaftaran"
+    }
+  ],
+
+  "gallery": {
+    "photos": [
+      {
+        "id": 1,
+        "image": "https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Kegiatan Belajar",
+        "description": "Santri belajar dengan penuh semangat"
+      },
+      {
+        "id": 2,
+        "image": "https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Tahfidz Al-Quran",
+        "description": "Setoran hafalan harian"
+      },
+      {
+        "id": 3,
+        "image": "https://images.pexels.com/photos/8364026/pexels-photo-8364026.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Sholat Berjamaah",
+        "description": "Pembiasaan sholat berjamaah"
+      },
+      {
+        "id": 4,
+        "image": "https://images.pexels.com/photos/5212317/pexels-photo-5212317.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Kelas Komputer",
+        "description": "Pembelajaran teknologi modern"
+      },
+      {
+        "id": 5,
+        "image": "https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Perpustakaan",
+        "description": "Perpustakaan dengan koleksi lengkap"
+      },
+      {
+        "id": 6,
+        "image": "https://images.pexels.com/photos/8088495/pexels-photo-8088495.jpeg?auto=compress&cs=tinysrgb&w=400",
+        "title": "Kegiatan Ekstrakurikuler",
+        "description": "Pengembangan bakat santri"
+      }
+    ]
+  },
+
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Ibu Siti Aminah",
+      "role": "Wali Santri SD IT",
+      "photo": "https://i.pravatar.cc/150?img=1",
+      "comment": "Alhamdulillah, anak saya berkembang pesat di Minnatul Huda. Akhlaknya semakin baik dan hafalan Qurannya terus bertambah.",
+      "rating": 5,
+      "date": "2025-01-15"
+    },
+    {
+      "id": 2,
+      "name": "Bapak Ahmad Dahlan",
+      "role": "Wali Santri SMP BP",
+      "photo": "https://i.pravatar.cc/150?img=12",
+      "comment": "Sangat puas dengan pendidikan di sini. Guru-guru sangat perhatian dan fasilitas lengkap. Recommended!",
+      "rating": 5,
+      "date": "2025-01-10"
+    },
+    {
+      "id": 3,
+      "name": "Ibu Fatimah Zahra",
+      "role": "Alumni SMK 2020",
+      "photo": "https://i.pravatar.cc/150?img=5",
+      "comment": "Pesantren ini benar-benar membentuk karakter saya. Ilmu agama dan akademik seimbang. Terima kasih Minnatul Huda!",
+      "rating": 5,
+      "date": "2024-12-20"
+    }
+  ]
+}
+
+  </script>
 </body>
 </html>
 
