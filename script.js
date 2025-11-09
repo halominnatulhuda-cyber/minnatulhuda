@@ -1153,24 +1153,3 @@ if (document.readyState === 'loading') {
 } else {
   loadSiteData();
 }
-
-
-function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m];}); }
-
-function openLightbox(src, title, caption){
-  // simple lightbox: create overlay element
-  let lb = document.getElementById('simple-lightbox');
-  if(!lb){
-    lb = document.createElement('div');
-    lb.id = 'simple-lightbox';
-    lb.style.position='fixed'; lb.style.inset='0'; lb.style.display='flex'; lb.style.alignItems='center'; lb.style.justifyContent='center';
-    lb.style.background='rgba(0,0,0,0.85)'; lb.style.zIndex=99999; lb.style.padding='2rem';
-    lb.addEventListener('click', ()=> lb.remove());
-    document.body.appendChild(lb);
-  } else { lb.innerHTML=''; lb.style.display='flex'; }
-  const inner = document.createElement('div');
-  inner.style.maxWidth='1000px'; inner.style.width='100%'; inner.style.borderRadius='12px'; inner.style.overflow='hidden'; inner.style.background='#fff';
-  inner.style.boxShadow='0 10px 30px rgba(0,0,0,0.5)';
-  inner.innerHTML = `<div style="position:relative;"><img src="${src}" alt="${escapeHtml(title)}" style="width:100%; height:auto; display:block;"><div style="padding:1rem;"><h3 style="margin:0 0 .5rem 0;">${escapeHtml(title)}</h3><p style="margin:0;">${escapeHtml(caption)}</p></div></div>`;
-  lb.appendChild(inner);
-}
