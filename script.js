@@ -581,6 +581,51 @@
 
 window.siteData = null;
 
+
+function loadSiteData() {
+  // Try fetch first (works when served via http/https). If that fails (CORS or file://),
+  // fallback to embedded data block with id="site-data".
+  function applyData(data) {
+    window.siteData = data;
+    if (document.getElementById('stats-container')) initStatistics(data.statistics);
+    if (document.getElementById('programs-container')) initPrograms(data.programs);
+    if (document.getElementById('news-container')) initNews(data.news);
+    if (document.getElementById('gallery-container')) initGallery(data.gallery);
+    if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+    if (document.getElementById('testimonial-form')) initTelegramForm(data.forms && data.forms.telegram ? data.forms.telegram : null);
+  }
+
+  // If running from file:// then fetch may be blocked; try embedded immediately.
+  if (location.protocol === 'file:') {
+    const embedded = window.parseDataBlock('site-data');
+    if (embedded) {
+      applyData(embedded);
+      return Promise.resolve(embedded);
+    }
+  }
+
+  return fetch('data.json')
+    .then(res => {
+      if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+      return res.json();
+    })
+    .then(data => {
+      applyData(data);
+      return data;
+    })
+    .catch(err => {
+      console.warn('Fetch data.json failed, trying embedded data block. Error:', err);
+      const embedded = window.parseDataBlock('site-data');
+      if (embedded) {
+        applyData(embedded);
+        return embedded;
+      } else {
+        console.error('No embedded site-data found. Cannot load site data.');
+      }
+    });
+}
+
+
 function loadSiteData() {
   fetch('data.json')
     .then(res => res.json())
