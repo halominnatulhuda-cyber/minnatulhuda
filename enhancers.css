@@ -1,19 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   ENHANCERS.CSS - World-Class Educational Website Design
-   Pesantren & Sekolah Minnatul Huda - International Premium Edition
-   
-   Design Philosophy:
-   - Clean, minimal navigation (NO heavy shadows)
-   - Premium card interactions with tilt effects
-   - Smooth micro-animations
-   - Islamic geometric patterns (subtle)
-   - Mobile-first responsive
-   - Accessibility-first (WCAG 2.1 AA)
+   ENHANCERS.CSS - Premium Design Enhancements
+   Pesantren & Sekolah Minnatul Huda
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ───────────────────────────────────────────────────────────────────────────
-   PREMIUM NAVIGATION (No Box Shadow - Subtle Border Instead)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .site-header {
   background: rgba(255, 255, 255, 0.98);
@@ -33,7 +21,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Nav Links - Elegant Hover Without Glow */
 .nav-link {
   position: relative;
   font-family: var(--font-primary);
@@ -53,14 +40,8 @@
   transition: width var(--transition-base);
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
+.nav-link:hover::after {
   width: 80%;
-}
-
-.nav-link:hover {
-  color: var(--primary);
-  background-color: transparent !important;
 }
 
 .nav-link.active {
@@ -83,7 +64,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Dropdown - Modern Minimal */
 .dropdown-menu {
   box-shadow: var(--shadow-lg) !important;
   border: 1px solid var(--neutral-200);
@@ -104,10 +84,6 @@
   color: var(--primary);
   transform: translateX(4px);
 }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   PREMIUM CARD SYSTEM (3D Tilt + Hover Effects)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .card {
   position: relative;
@@ -142,7 +118,6 @@
   box-shadow: var(--shadow-xl);
 }
 
-/* Card with Islamic Geometric Pattern */
 .card::after {
   content: '';
   position: absolute;
@@ -161,7 +136,6 @@
   opacity: 0.5;
 }
 
-/* Premium Card Icon */
 .card-icon {
   width: 56px;
   height: 56px;
@@ -178,7 +152,6 @@
   fill: var(--white);
 }
 
-/* Card Image - Zoom & Overlay */
 .card-image {
   position: relative;
   overflow: hidden;
@@ -210,10 +183,6 @@
   opacity: 1;
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   PREMIUM BUTTONS (Gradient + Micro-interactions)
-   ─────────────────────────────────────────────────────────────────────────── */
-
 .btn {
   position: relative;
   font-family: var(--font-primary);
@@ -225,7 +194,7 @@
   overflow: hidden;
   transition: all var(--transition-base);
   min-width: 120px;
-  min-height: 44px; /* Touch-friendly */
+  min-height: 44px;
 }
 
 .btn::before {
@@ -285,10 +254,6 @@
   transform: translateY(-2px);
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   SCROLL REVEAL ANIMATIONS (Intersection Observer)
-   ─────────────────────────────────────────────────────────────────────────── */
-
 .reveal,
 .reveal-fade {
   opacity: 0;
@@ -339,7 +304,6 @@
   transform: scale(1);
 }
 
-/* Stagger children */
 .stagger-children > * {
   opacity: 0;
   transform: translateY(20px);
@@ -352,10 +316,6 @@
 .stagger-children.active > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
 .stagger-children.active > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
 .stagger-children.active > *:nth-child(6) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   PREMIUM LIGHTBOX (Enhanced UX)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .lightbox {
   display: none;
@@ -450,19 +410,15 @@
 }
 
 @keyframes zoomIn {
-  from { 
-    transform: scale(0.8); 
-    opacity: 0; 
+  from {
+    transform: scale(0.8);
+    opacity: 0;
   }
-  to { 
-    transform: scale(1); 
-    opacity: 1; 
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   SCROLL PROGRESS BAR (Gradient)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .scroll-progress {
   position: fixed;
@@ -475,10 +431,6 @@
   transition: width 0.1s ease;
   box-shadow: 0 2px 8px rgba(11, 110, 79, 0.3);
 }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   HERO SLIDER (Enhanced with Overlay)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .hero-slider {
   position: relative;
@@ -496,8 +448,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(11, 110, 79, 0.7) 0%, 
+  background: linear-gradient(135deg,
+    rgba(11, 110, 79, 0.7) 0%,
     rgba(5, 56, 38, 0.85) 100%
   );
   opacity: 0.6;
@@ -510,8 +462,8 @@
 
 .slider-content {
   backdrop-filter: blur(8px);
-  background: linear-gradient(to top, 
-    rgba(5, 56, 38, 0.95) 0%, 
+  background: linear-gradient(to top,
+    rgba(5, 56, 38, 0.95) 0%,
     rgba(5, 56, 38, 0.6) 70%,
     transparent 100%
   );
@@ -530,7 +482,6 @@
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Slider Controls - Premium Style */
 .slider-btn {
   background: rgba(255, 255, 255, 0.95);
   border: 2px solid rgba(11, 110, 79, 0.2);
@@ -558,10 +509,6 @@
   transform: scale(1.3);
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   SECTION ENHANCEMENTS
-   ─────────────────────────────────────────────────────────────────────────── */
-
 .section {
   position: relative;
   padding: var(--space-20) var(--space-6);
@@ -575,7 +522,6 @@
   background: var(--neutral-100);
 }
 
-/* Islamic Geometric Background Pattern */
 .section-soft::before {
   content: '';
   position: absolute;
@@ -583,7 +529,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
+  background-image:
     radial-gradient(circle at 25px 25px, var(--primary-soft) 1.5px, transparent 1.5px),
     radial-gradient(circle at 75px 75px, var(--accent) 1px, transparent 1px);
   background-size: 100px 100px;
@@ -609,10 +555,6 @@
   background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-orange));
   border-radius: var(--radius-full);
 }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   TABLE STYLES (Modern, Clean)
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .table {
   width: 100%;
@@ -649,10 +591,6 @@
   color: var(--text-muted);
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   ACCORDION (FAQ) - Premium Style
-   ─────────────────────────────────────────────────────────────────────────── */
-
 .accordion-item {
   background: var(--white);
   border: 1px solid var(--neutral-200);
@@ -685,10 +623,6 @@
   background: linear-gradient(90deg, var(--primary-soft), var(--white));
   color: var(--primary);
 }
-
-/* ───────────────────────────────────────────────────────────────────────────
-   FOOTER - Modern, Organized
-   ─────────────────────────────────────────────────────────────────────────── */
 
 .site-footer {
   background: linear-gradient(135deg, var(--primary-dark), var(--primary));
@@ -724,57 +658,47 @@
   transform: translateX(4px);
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   RESPONSIVE DESIGN (Mobile-First)
-   ─────────────────────────────────────────────────────────────────────────── */
-
 @media (max-width: 768px) {
   .section {
     padding: var(--space-12) var(--space-4);
   }
-  
+
   .lightbox-nav {
     width: 44px;
     height: 44px;
     font-size: 22px;
   }
-  
+
   .lightbox-prev { left: 12px; }
   .lightbox-next { right: 12px; }
-  
+
   .lightbox-close {
     top: -44px;
     width: 40px;
     height: 40px;
     font-size: 24px;
   }
-  
+
   .btn {
     padding: var(--space-3) var(--space-6);
     font-size: var(--font-size-sm);
   }
-  
+
   .card {
     margin-bottom: var(--space-6);
   }
-  
+
   .card:hover {
     transform: translateY(-4px);
   }
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   ACCESSIBILITY ENHANCEMENTS
-   ─────────────────────────────────────────────────────────────────────────── */
-
-/* Focus Visible - WCAG 2.1 */
 *:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
-/* Skip to Content */
 .skip-to-content {
   position: absolute;
   top: -100px;
@@ -795,7 +719,6 @@
   outline-offset: 2px;
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .card:hover,
   .btn:hover,
