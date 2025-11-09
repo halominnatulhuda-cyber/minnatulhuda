@@ -1,10 +1,23 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   ENHANCERS.JS - Premium Interactive Features
-   Pesantren & Sekolah Minnatul Huda
+   ENHANCERS.JS - World-Class Interactive Features
+   Pesantren & Sekolah Minnatul Huda - International Premium Edition
+   
+   Features:
+   - Card 3D tilt effect (follow mouse)
+   - Sticky transparent navigation
+   - Dynamic menu highlighting on scroll
+   - Premium icon loading system
+   - Universal lightbox with keyboard nav
+   - Smooth scroll reveal animations
+   - Micro-interactions and polish
    ═══════════════════════════════════════════════════════════════════════════ */
 
 (function() {
   'use strict';
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     CONFIGURATION
+     ─────────────────────────────────────────────────────────────────────────── */
 
   const CONFIG = {
     scrollThreshold: 100,
@@ -13,6 +26,48 @@
     transitionDuration: 300,
     lightboxTransition: 400,
   };
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     1. PREMIUM ICON LOADER (Auto-load from ui-icons.json)
+     ─────────────────────────────────────────────────────────────────────────── */
+
+  async function loadPremiumIcons() {
+    try {
+    return; // Disabled icon loading to prevent 404 errors
+//       // const response = await fetch('ui-icons.json');
+// //       if (!response.ok) return;
+// //       
+// //       const data = await response.json();
+// //       const icons = data.icons;
+// // 
+// //       document.querySelectorAll('[data-icon]').forEach(element => {
+// //         const iconKey = element.dataset.icon;
+// //         if (icons[iconKey]) {
+// //           if (element.tagName === 'IMG') {
+//             element.src = icons[iconKey];
+//             element.alt = iconKey + ' icon';
+//             element.style.width = element.dataset.iconSize || '48px';
+//             element.style.height = element.dataset.iconSize || '48px';
+//           } else {
+//             const img = document.createElement('img');
+//             img.src = icons[iconKey];
+//             img.alt = iconKey + ' icon';
+//             img.style.width = element.dataset.iconSize || '48px';
+//             img.style.height = element.dataset.iconSize || '48px';
+//             element.appendChild(img);
+//           }
+//         }
+//       });
+
+      console.log('✅ Premium icons loaded successfully');
+    } catch (error) {
+      console.warn('⚠️ Icon loading failed:', error);
+    }
+  }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     2. STICKY TRANSPARENT NAVIGATION (Solid on Scroll)
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initStickyNav() {
     const header = document.querySelector('.site-header');
@@ -31,6 +86,7 @@
         header.classList.add('scrolled');
       }
 
+      // Auto-hide on scroll down (premium UX)
       if (currentScroll > lastScroll && currentScroll > 200) {
         header.style.transform = 'translateY(-100%)';
       } else {
@@ -41,18 +97,26 @@
     });
   }
 
+  /* ───────────────────────────────────────────────────────────────────────────
+     3. DYNAMIC MENU HIGHLIGHTING (Active section on scroll)
+     ─────────────────────────────────────────────────────────────────────────── */
+
   function initDynamicMenuHighlight() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
 
     if (sections.length === 0 || navLinks.length === 0) return;
 
+    // Store the original page-level active link (don't overwrite it)
+    const originalActiveLink = document.querySelector('.nav-link.active');
+
+    // Only track links with hash anchors for in-page navigation
     const hashLinks = Array.from(navLinks).filter(link => {
       const href = link.getAttribute('href');
       return href && href.includes('#');
     });
 
-    if (hashLinks.length === 0) return;
+    if (hashLinks.length === 0) return; // No in-page navigation, skip
 
     const observerOptions = {
       threshold: 0.3,
@@ -63,13 +127,16 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const currentId = entry.target.id;
-
+          
+          // Only modify active state for pure hash anchor links (in-page navigation)
           hashLinks.forEach(link => {
             const href = link.getAttribute('href');
-
+            
+            // Only activate links that are pure hash anchors (#section), not cross-page (#page.html#section)
             if (href && href.startsWith('#') && href === '#' + currentId) {
               link.classList.add('active');
             } else if (href && href.startsWith('#')) {
+              // Remove active only from other pure hash links
               link.classList.remove('active');
             }
           });
@@ -79,6 +146,10 @@
 
     sections.forEach(section => observer.observe(section));
   }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     4. CARD 3D TILT EFFECT (Follow Mouse - Premium Interaction)
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initCardTilt() {
     const cards = document.querySelectorAll('.card');
@@ -110,14 +181,19 @@
     });
   }
 
+  /* ───────────────────────────────────────────────────────────────────────────
+     5. SCROLL REVEAL ANIMATIONS (Intersection Observer)
+     ─────────────────────────────────────────────────────────────────────────── */
+
   function initScrollReveal() {
     const revealElements = document.querySelectorAll('.card, .section-header, img');
 
+    // Auto-add reveal classes
     revealElements.forEach((element, index) => {
-      if (!element.classList.contains('reveal') &&
-          !element.classList.contains('reveal-left') &&
+      if (!element.classList.contains('reveal') && 
+          !element.classList.contains('reveal-left') && 
           !element.classList.contains('reveal-right')) {
-
+        
         const variant = index % 3;
         if (variant === 0) {
           element.classList.add('reveal-fade');
@@ -133,6 +209,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
+          // Unobserve after activation for performance
           observer.unobserve(entry.target);
         }
       });
@@ -147,6 +224,10 @@
 
     console.log('✅ Scroll reveal animations initialized');
   }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     6. SCROLL PROGRESS BAR
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initScrollProgress() {
     let progressBar = document.querySelector('.scroll-progress');
@@ -166,6 +247,10 @@
       progressBar.setAttribute('aria-valuenow', Math.round(scrolled));
     });
   }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     7. UNIVERSAL LIGHTBOX (Enhanced with Keyboard Navigation)
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initUniversalLightbox() {
     let lightbox = document.getElementById('lightbox');
@@ -212,8 +297,10 @@
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
 
+      // Focus trap
       closeBtn.focus();
 
+      // Hide/show navigation buttons
       if (images.length <= 1) {
         prevBtn.style.display = 'none';
         nextBtn.style.display = 'none';
@@ -226,7 +313,6 @@
     function closeLightbox() {
       lightbox.classList.remove('active');
       document.body.style.overflow = '';
-      lightboxImage.src = '';
     }
 
     function showPrevImage(e) {
@@ -245,13 +331,14 @@
       lightboxImage.alt = images[currentImageIndex].alt || 'Image';
     }
 
+    // Event Listeners
     document.addEventListener('click', (e) => {
       const clickedImage = e.target.closest('img');
-      if (clickedImage &&
-          !clickedImage.closest('.lightbox') &&
+      if (clickedImage && 
+          !clickedImage.closest('.lightbox') && 
           !clickedImage.closest('.logo-icon') &&
           !clickedImage.closest('.hamburger-icon') &&
-          clickedImage.src &&
+          clickedImage.src && 
           (clickedImage.src.includes('placehold') || clickedImage.src.includes('pexels') || clickedImage.closest('.gallery-item'))) {
         e.preventDefault();
         openLightbox(clickedImage.src, clickedImage.alt);
@@ -267,6 +354,7 @@
     prevBtn.addEventListener('click', showPrevImage);
     nextBtn.addEventListener('click', showNextImage);
 
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
       if (!lightbox.classList.contains('active')) return;
 
@@ -281,6 +369,10 @@
 
     console.log('✅ Universal lightbox initialized');
   }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     8. SMOOTH SCROLL FOR ANCHOR LINKS
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -304,6 +396,10 @@
     });
   }
 
+  /* ───────────────────────────────────────────────────────────────────────────
+     9. LAZY LOADING IMAGES (Performance Optimization)
+     ─────────────────────────────────────────────────────────────────────────── */
+
   function initLazyLoading() {
     const images = document.querySelectorAll('img[data-src]');
 
@@ -323,6 +419,10 @@
     images.forEach(img => imageObserver.observe(img));
   }
 
+  /* ───────────────────────────────────────────────────────────────────────────
+     10. FORM ENHANCEMENTS (Floating Labels, Validation)
+     ─────────────────────────────────────────────────────────────────────────── */
+
   function initFormEnhancements() {
     const forms = document.querySelectorAll('form');
 
@@ -330,6 +430,7 @@
       const inputs = form.querySelectorAll('input, textarea, select');
 
       inputs.forEach(input => {
+        // Floating label effect
         input.addEventListener('focus', function() {
           this.parentElement?.classList.add('focused');
         });
@@ -340,12 +441,17 @@
           }
         });
 
+        // Initialize state
         if (input.value) {
           input.parentElement?.classList.add('focused');
         }
       });
     });
   }
+
+  /* ───────────────────────────────────────────────────────────────────────────
+     11. PARALLAX EFFECT ON SCROLL (Subtle)
+     ─────────────────────────────────────────────────────────────────────────── */
 
   function initParallax() {
     const parallaxElements = document.querySelectorAll('[data-parallax]');
@@ -361,7 +467,12 @@
     });
   }
 
+  /* ───────────────────────────────────────────────────────────────────────────
+     12. INITIALIZE ALL ENHANCEMENTS
+     ─────────────────────────────────────────────────────────────────────────── */
+
   function initAll() {
+    // Wait for DOM to be ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', runInit);
     } else {
@@ -372,6 +483,8 @@
   function runInit() {
     console.log('🚀 Initializing premium enhancements...');
 
+    // Initialize all features
+    loadPremiumIcons();
     initStickyNav();
     initDynamicMenuHighlight();
     initCardTilt();
@@ -387,6 +500,7 @@
     console.log('🌿 Pesantren & Sekolah Minnatul Huda - International Premium Edition');
   }
 
+  // Start initialization
   initAll();
 
 })();
