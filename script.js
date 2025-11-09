@@ -582,18 +582,36 @@
 window.siteData = null;
 
 
-function loadSiteData() {
-  // Try fetch first (works when served via http/https). If that fails (CORS or file://),
-  // fallback to embedded data block with id="site-data".
-  function applyData(data) {
+async function loadSiteData() {
+  try {
+    const res = await fetch('./data.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('Fetch failed');
+    const data = await res.json();
     window.siteData = data;
+    if (document.getElementById('gallery-container')) initGallery(data.gallery);
     if (document.getElementById('stats-container')) initStatistics(data.statistics);
     if (document.getElementById('programs-container')) initPrograms(data.programs);
     if (document.getElementById('news-container')) initNews(data.news);
-    if (document.getElementById('gallery-container')) initGallery(data.gallery);
     if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-    if (document.getElementById('testimonial-form')) initTelegramForm(data.forms && data.forms.telegram ? data.forms.telegram : null);
+  } catch (e) {
+    console.warn('Fetch data.json failed, using embedded data if available', e);
+    const embedded = document.getElementById('site-data');
+    if (embedded) {
+      try {
+        const data = JSON.parse(embedded.textContent);
+        window.siteData = data;
+        if (document.getElementById('gallery-container')) initGallery(data.gallery);
+        if (document.getElementById('stats-container')) initStatistics(data.statistics);
+        if (document.getElementById('programs-container')) initPrograms(data.programs);
+        if (document.getElementById('news-container')) initNews(data.news);
+        if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+      } catch (err) {
+        console.error('Embedded data invalid', err);
+      }
+    }
   }
+}
+
 
   // If running from file:// then fetch may be blocked; try embedded immediately.
   if (location.protocol === 'file:') {
@@ -626,18 +644,36 @@ function loadSiteData() {
 }
 
 
-function loadSiteData() {
-  fetch('data.json')
-    .then(res => res.json())
-    .then(data => {
-      window.siteData = data;
-      if (document.getElementById('stats-container')) initStatistics(data.statistics);
-      if (document.getElementById('programs-container')) initPrograms(data.programs);
-      if (document.getElementById('news-container')) initNews(data.news);
-      if (document.getElementById('gallery-container')) initGallery(data.gallery);
-      if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-      if (document.getElementById('testimonial-form')) initTelegramForm(data.forms.telegram);
-    })
+async function loadSiteData() {
+  try {
+    const res = await fetch('./data.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('Fetch failed');
+    const data = await res.json();
+    window.siteData = data;
+    if (document.getElementById('gallery-container')) initGallery(data.gallery);
+    if (document.getElementById('stats-container')) initStatistics(data.statistics);
+    if (document.getElementById('programs-container')) initPrograms(data.programs);
+    if (document.getElementById('news-container')) initNews(data.news);
+    if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+  } catch (e) {
+    console.warn('Fetch data.json failed, using embedded data if available', e);
+    const embedded = document.getElementById('site-data');
+    if (embedded) {
+      try {
+        const data = JSON.parse(embedded.textContent);
+        window.siteData = data;
+        if (document.getElementById('gallery-container')) initGallery(data.gallery);
+        if (document.getElementById('stats-container')) initStatistics(data.statistics);
+        if (document.getElementById('programs-container')) initPrograms(data.programs);
+        if (document.getElementById('news-container')) initNews(data.news);
+        if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+      } catch (err) {
+        console.error('Embedded data invalid', err);
+      }
+    }
+  }
+}
+)
     .catch(err => console.error('Error loading data.json:', err));
 }
 
@@ -884,13 +920,26 @@ function showNewsPopup(newsItem) {
   });
 }
 
-function initGallery(gallery) {
-  const container = document.getElementById('gallery-container');
-  if (!container || !gallery || !gallery.photos) return;
-  
-  container.styles.jsText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;';
-  container.innerHTML = gallery.photos.map(photo => `
-    <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); cursor: pointer;" data-image="${photo.image}" data-title="${photo.title}" data-description="${photo.description}">
+function initGallery(galleryData) {
+  const container = document.getElementById("gallery-container");
+  if (!container || !galleryData) return;
+  container.innerHTML = "";
+  galleryData.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "gallery-item";
+    div.style.position = "relative";
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.title}" style="width:100%; border-radius: var(--radius-lg);">
+      <div class="gallery-overlay" style="position: absolute; inset: 0px; background: rgba(0, 0, 0, 0.6); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF; font-size: 1.1rem;">${item.title}</h4>
+        <p style="margin: 0; font-size: 0.875rem; color: #FFFFFF;">${item.caption}</p>
+      </div>`;
+    div.addEventListener('mouseenter', () => div.querySelector('.gallery-overlay').style.opacity = '1');
+    div.addEventListener('mouseleave', () => div.querySelector('.gallery-overlay').style.opacity = '0');
+    container.appendChild(div);
+  });
+}
+" data-title="${photo.title}" data-description="${photo.description}">
       <img src="${photo.image}" alt="${photo.title}" class="gallery-img" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s;">
       <div class="gallery-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
         <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF; font-size: 1.1rem;">${photo.title}</h4>
@@ -1103,4 +1152,25 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', loadSiteData);
 } else {
   loadSiteData();
+}
+
+
+function escapeHtml(str){ if(!str) return ''; return String(str).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m];}); }
+
+function openLightbox(src, title, caption){
+  // simple lightbox: create overlay element
+  let lb = document.getElementById('simple-lightbox');
+  if(!lb){
+    lb = document.createElement('div');
+    lb.id = 'simple-lightbox';
+    lb.style.position='fixed'; lb.style.inset='0'; lb.style.display='flex'; lb.style.alignItems='center'; lb.style.justifyContent='center';
+    lb.style.background='rgba(0,0,0,0.85)'; lb.style.zIndex=99999; lb.style.padding='2rem';
+    lb.addEventListener('click', ()=> lb.remove());
+    document.body.appendChild(lb);
+  } else { lb.innerHTML=''; lb.style.display='flex'; }
+  const inner = document.createElement('div');
+  inner.style.maxWidth='1000px'; inner.style.width='100%'; inner.style.borderRadius='12px'; inner.style.overflow='hidden'; inner.style.background='#fff';
+  inner.style.boxShadow='0 10px 30px rgba(0,0,0,0.5)';
+  inner.innerHTML = `<div style="position:relative;"><img src="${src}" alt="${escapeHtml(title)}" style="width:100%; height:auto; display:block;"><div style="padding:1rem;"><h3 style="margin:0 0 .5rem 0;">${escapeHtml(title)}</h3><p style="margin:0;">${escapeHtml(caption)}</p></div></div>`;
+  lb.appendChild(inner);
 }
