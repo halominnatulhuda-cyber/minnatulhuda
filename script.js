@@ -581,99 +581,18 @@
 
 window.siteData = null;
 
-
-async function loadSiteData() {
-  try {
-    const res = await fetch('./data.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error('Fetch failed');
-    const data = await res.json();
-    window.siteData = data;
-    if (document.getElementById('gallery-container')) initGallery(data.gallery);
-    if (document.getElementById('stats-container')) initStatistics(data.statistics);
-    if (document.getElementById('programs-container')) initPrograms(data.programs);
-    if (document.getElementById('news-container')) initNews(data.news);
-    if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-  } catch (e) {
-    console.warn('Fetch data.json failed, using embedded data if available', e);
-    const embedded = document.getElementById('site-data');
-    if (embedded) {
-      try {
-        const data = JSON.parse(embedded.textContent);
-        window.siteData = data;
-        if (document.getElementById('gallery-container')) initGallery(data.gallery);
-        if (document.getElementById('stats-container')) initStatistics(data.statistics);
-        if (document.getElementById('programs-container')) initPrograms(data.programs);
-        if (document.getElementById('news-container')) initNews(data.news);
-        if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-      } catch (err) {
-        console.error('Embedded data invalid', err);
-      }
-    }
-  }
-}
-
-
-  // If running from file:// then fetch may be blocked; try embedded immediately.
-  if (location.protocol === 'file:') {
-    const embedded = window.parseDataBlock('site-data');
-    if (embedded) {
-      applyData(embedded);
-      return Promise.resolve(embedded);
-    }
-  }
-
-  return fetch('data.json')
-    .then(res => {
-      if (!res.ok) throw new Error('Fetch failed: ' + res.status);
-      return res.json();
-    })
+function loadSiteData() {
+  fetch('data.json')
+    .then(res => res.json())
     .then(data => {
-      applyData(data);
-      return data;
+      window.siteData = data;
+      if (document.getElementById('stats-container')) initStatistics(data.statistics);
+      if (document.getElementById('programs-container')) initPrograms(data.programs);
+      if (document.getElementById('news-container')) initNews(data.news);
+      if (document.getElementById('gallery-container')) initGallery(data.gallery);
+      if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+      if (document.getElementById('testimonial-form')) initTelegramForm(data.forms.telegram);
     })
-    .catch(err => {
-      console.warn('Fetch data.json failed, trying embedded data block. Error:', err);
-      const embedded = window.parseDataBlock('site-data');
-      if (embedded) {
-        applyData(embedded);
-        return embedded;
-      } else {
-        console.error('No embedded site-data found. Cannot load site data.');
-      }
-    });
-}
-
-
-async function loadSiteData() {
-  try {
-    const res = await fetch('./data.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error('Fetch failed');
-    const data = await res.json();
-    window.siteData = data;
-    if (document.getElementById('gallery-container')) initGallery(data.gallery);
-    if (document.getElementById('stats-container')) initStatistics(data.statistics);
-    if (document.getElementById('programs-container')) initPrograms(data.programs);
-    if (document.getElementById('news-container')) initNews(data.news);
-    if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-  } catch (e) {
-    console.warn('Fetch data.json failed, using embedded data if available', e);
-    const embedded = document.getElementById('site-data');
-    if (embedded) {
-      try {
-        const data = JSON.parse(embedded.textContent);
-        window.siteData = data;
-        if (document.getElementById('gallery-container')) initGallery(data.gallery);
-        if (document.getElementById('stats-container')) initStatistics(data.statistics);
-        if (document.getElementById('programs-container')) initPrograms(data.programs);
-        if (document.getElementById('news-container')) initNews(data.news);
-        if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
-      } catch (err) {
-        console.error('Embedded data invalid', err);
-      }
-    }
-  }
-}
-)
     .catch(err => console.error('Error loading data.json:', err));
 }
 
@@ -745,7 +664,7 @@ function showProgramPopup(program) {
   if (!program) return;
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
-  modal.styles.jsText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   
   let currentImageIndex = 0;
   let autoSlideInterval;
@@ -883,7 +802,7 @@ function showNewsPopup(newsItem) {
   if (!newsItem) return;
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
-  modal.styles.jsText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   modal.innerHTML = `
     <div class="modal-content" style="background: white; border-radius: var(--radius-xl); padding: 0; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; scrollbar-width: none; -ms-overflow-style: none;">
       <style>
@@ -920,26 +839,13 @@ function showNewsPopup(newsItem) {
   });
 }
 
-function initGallery(galleryData) {
-  const container = document.getElementById("gallery-container");
-  if (!container || !galleryData) return;
-  container.innerHTML = "";
-  galleryData.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "gallery-item";
-    div.style.position = "relative";
-    div.innerHTML = `
-      <img src="${item.image}" alt="${item.title}" style="width:100%; border-radius: var(--radius-lg);">
-      <div class="gallery-overlay" style="position: absolute; inset: 0px; background: rgba(0, 0, 0, 0.6); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF; font-size: 1.1rem;">${item.title}</h4>
-        <p style="margin: 0; font-size: 0.875rem; color: #FFFFFF;">${item.caption}</p>
-      </div>`;
-    div.addEventListener('mouseenter', () => div.querySelector('.gallery-overlay').style.opacity = '1');
-    div.addEventListener('mouseleave', () => div.querySelector('.gallery-overlay').style.opacity = '0');
-    container.appendChild(div);
-  });
-}
-" data-title="${photo.title}" data-description="${photo.description}">
+function initGallery(gallery) {
+  const container = document.getElementById('gallery-container');
+  if (!container || !gallery || !gallery.photos) return;
+  
+  container.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;';
+  container.innerHTML = gallery.photos.map(photo => `
+    <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); cursor: pointer;" data-image="${photo.image}" data-title="${photo.title}" data-description="${photo.description}">
       <img src="${photo.image}" alt="${photo.title}" class="gallery-img" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s;">
       <div class="gallery-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
         <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF; font-size: 1.1rem;">${photo.title}</h4>
@@ -966,7 +872,7 @@ function initGallery(galleryData) {
 function openImageLightbox(src, title, description) {
   const lightbox = document.createElement('div');
   lightbox.className = 'lightbox active';
-  lightbox.styles.jsText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  lightbox.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   lightbox.innerHTML = `
     <div class="lightbox-content" style="position: relative; max-width: 90%; max-height: 90%; text-align: center;">
       <button class="lightbox-close" style="position: absolute; top: -3rem; right: 0; background: white; color: black; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10;">&times;</button>
@@ -1020,7 +926,7 @@ function initTestimonials(testimonials) {
       visibleTestimonials.push(testimonials[index]);
     }
     
-    container.styles.jsText = `display: grid; grid-template-columns: repeat(${itemsPerView}, 1fr); gap: 1.5rem; margin-bottom: 2rem; transition: opacity 0.3s ease;`;
+    container.style.cssText = `display: grid; grid-template-columns: repeat(${itemsPerView}, 1fr); gap: 1.5rem; margin-bottom: 2rem; transition: opacity 0.3s ease;`;
     
     container.innerHTML = visibleTestimonials.map(testi => `
       <div class="testimonial-card card" style="text-align: center; padding: 2rem;">
@@ -1056,7 +962,7 @@ function initTestimonials(testimonials) {
   
   if (testimonials.length > itemsPerView) {
     const controlsDiv = document.createElement('div');
-    controlsDiv.styles.jsText = 'display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem;';
+    controlsDiv.style.cssText = 'display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem;';
     controlsDiv.innerHTML = `
       <button class="testi-prev" style="background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">&lsaquo;</button>
       <div style="display: flex; gap: 0.5rem;">
