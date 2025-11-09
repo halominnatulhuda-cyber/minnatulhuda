@@ -9,10 +9,12 @@
 
 :root {
   /* Warna Utama - WAJIB PERSIS */
-  --primary: #0B6E4F;
-  --accent: #14A76C;
-  --soft: #E7F7EF;
-  --dark: #053826;
+  --primary: #205072;
+  --accent: #329D9C;
+  --soft: #CFF4D2;
+  --dark: #1A3F57;
+  --secondary: #56C596;    /* Hijau Cerah */
+  --secondary-light: #7BE495; /* Hijau Muda */
   --text: #0F172A;
   
   /* Warna Tambahan */
@@ -30,9 +32,9 @@
   
   /* Feedback Colors */
   --success: #10B981;
-  --warning: #56C596;
-  --error: #CFF4D2;
-  --info: #56C596;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
   
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -353,6 +355,8 @@ a:focus-visible {
   padding: var(--spacing-sm);
   cursor: pointer;
   color: var(--text);
+  position: relative;
+  z-index: 10000;
   transition: color var(--transition-base);
 }
 
@@ -440,6 +444,7 @@ a:focus-visible {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: calc(var(--z-modal) - 1);
+  pointer-events: none;
   opacity: 0;
   transition: opacity var(--transition-base);
 }
@@ -447,6 +452,7 @@ a:focus-visible {
 .mobile-overlay.active {
   display: block;
   opacity: 1;
+  pointer-events: auto;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
@@ -1145,3 +1151,44 @@ a:focus-visible {
   }
 }
 
+/* ───────────────────────────────────────────────────────────────────────────
+   RESPONSIVE GRID IMPROVEMENTS
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Program Grid - 4 columns desktop, 2x2 mobile */
+#programs-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+  #programs-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #programs-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* News Grid - 3 columns */
+#news-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+  #news-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #news-container {
+    grid-template-columns: 1fr;
+  }
+}
