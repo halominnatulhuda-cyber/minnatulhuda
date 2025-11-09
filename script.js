@@ -502,6 +502,7 @@
   }
   
   function init() {
+    loadSiteData();
     initMobileNav();
     initSlider();
     initSmoothScroll();
@@ -577,15 +578,484 @@
   }
 
   // Pastikan dipanggil di dalam init()
-  function init() {
-    initMobileNav();
-    initSlider();
-    initSmoothScroll();
-    initLightbox();
-    initAccordion();
-    initLoginLink();
-    initUniversalImageZoom(); // ✅ tambahkan baris ini
 
-    console.log('✅ Website Minnatul Huda initialized successfully');
+window.siteData = null;
+
+function loadSiteData() {
+  fetch('data.json')
+    .then(res => res.json())
+    .then(data => {
+      window.siteData = data;
+      if (document.getElementById('stats-container')) initStatistics(data.statistics);
+      if (document.getElementById('programs-container')) initPrograms(data.programs);
+      if (document.getElementById('news-container')) initNews(data.news);
+      if (document.getElementById('gallery-container')) initGallery(data.gallery);
+      if (document.getElementById('testimonial-container')) initTestimonials(data.testimonials);
+      if (document.getElementById('testimonial-form')) initTelegramForm(data.forms.telegram);
+    })
+    .catch(err => console.error('Error loading data.json:', err));
+}
+
+function initStatistics(stats) {
+  const container = document.getElementById('stats-container');
+  if (!container || !stats) return;
+  
+  const statsItems = [
+    { label: 'Total Santri', value: stats.total_students || 0, icon: '👥' },
+    { label: 'Alumni', value: stats.total_alumni || 0, icon: '🎓' },
+    { label: 'Guru & Ustadz', value: stats.total_teachers || 0, icon: '👨‍🏫' },
+    { label: 'Prestasi', value: stats.achievements || 0, icon: '🏆' }
+  ];
+  
+  container.innerHTML = statsItems.map(item => `
+    <div class="stat-card card" style="text-align: center; padding: 2rem;">
+      <div style="font-size: 3rem;">${item.icon}</div>
+      <div class="stat-value" data-target="${item.value}" style="font-size: 2.5rem; font-weight: bold; color: var(--primary); margin: 0.5rem 0;">0</div>
+      <div style="font-size: 1rem; color: var(--text-muted);">${item.label}</div>
+    </div>
+  `).join('');
+  
+  setTimeout(animateCounters, 200);
+}
+
+function animateCounters() {
+  const counters = document.querySelectorAll('.stat-value[data-target]');
+  counters.forEach(counter => {
+    const target = parseInt(counter.dataset.target);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        counter.textContent = target.toLocaleString('id-ID');
+        clearInterval(timer);
+      } else {
+        counter.textContent = Math.floor(current).toLocaleString('id-ID');
+      }
+    }, 16);
+  });
+}
+
+function initPrograms(programs) {
+  const container = document.getElementById('programs-container');
+  if (!container || !programs) return;
+  
+  container.innerHTML = programs.map(program => `
+    <div class="card program-card" style="cursor: pointer;" data-program-id="${program.id}">
+      <img src="${program.images[0]}" alt="${program.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+      <div class="card-content">
+        <h3 class="card-title">${program.title}</h3>
+        <p class="card-text">${program.description.substring(0, 100)}...</p>
+      </div>
+    </div>
+  `).join('');
+  
+  document.querySelectorAll('.program-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const programId = card.dataset.programId;
+      showProgramPopup(programs.find(p => p.id == programId));
+    });
+  });
+}
+
+function showProgramPopup(program) {
+  if (!program) return;
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  
+  let currentImageIndex = 0;
+  let autoSlideInterval;
+  
+  const updateSlider = () => {
+    const sliderImg = modal.querySelector('.modal-slider-img');
+    const indicators = modal.querySelectorAll('.slider-indicator');
+    if (sliderImg) {
+      sliderImg.src = program.images[currentImageIndex];
+      indicators.forEach((ind, i) => {
+        ind.style.background = i === currentImageIndex ? 'var(--primary)' : 'rgba(255,255,255,0.5)';
+      });
+    }
+  };
+  
+  const nextSlide = () => {
+    currentImageIndex = (currentImageIndex + 1) % program.images.length;
+    updateSlider();
+  };
+  
+  const prevSlide = () => {
+    currentImageIndex = (currentImageIndex - 1 + program.images.length) % program.images.length;
+    updateSlider();
+  };
+  
+  modal.innerHTML = `
+    <div class="modal-content" style="background: white; border-radius: var(--radius-xl); padding: 0; max-width: 900px; max-height: 90vh; overflow-y: auto; position: relative; scrollbar-width: none; -ms-overflow-style: none;">
+      <style>
+        .modal-content::-webkit-scrollbar { display: none; }
+      </style>
+      <button class="modal-close" style="position: absolute; top: 1rem; right: 1rem; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10;">&times;</button>
+      
+      <div style="position: relative; width: 100%; height: 400px; background: #000; border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
+        <img src="${program.images[0]}" alt="${program.title}" class="modal-slider-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
+        ${program.images.length > 1 ? `
+          <button class="slider-prev-btn" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">&lsaquo;</button>
+          <button class="slider-next-btn" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">&rsaquo;</button>
+          <div style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem;">
+            ${program.images.map((_, i) => `<div class="slider-indicator" style="width: 10px; height: 10px; border-radius: 50%; background: ${i === 0 ? 'var(--primary)' : 'rgba(255,255,255,0.5)'}; cursor: pointer;" data-index="${i}"></div>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+      
+      <div style="padding: 2rem;">
+        <h2 style="color: var(--primary); margin-bottom: 1rem;">${program.title}</h2>
+        <p style="margin-bottom: 1.5rem; line-height: 1.6; color: var(--text-muted);">${program.description}</p>
+        
+        ${program.youtube ? `
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.1rem;">Video Program</h3>
+            <iframe width="100%" height="315" src="${program.youtube}" frameborder="0" allowfullscreen style="border-radius: var(--radius-md);"></iframe>
+          </div>
+        ` : ''}
+        
+        <h3 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.1rem;">Fitur Program:</h3>
+        <ul style="line-height: 1.8; padding-left: 1.5rem;">
+          ${program.features.map(f => `<li style="margin-bottom: 0.5rem;">${f}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  setTimeout(() => modal.style.opacity = '1', 10);
+  document.body.style.overflow = 'hidden';
+  
+  if (program.images.length > 1) {
+    autoSlideInterval = setInterval(nextSlide, 4000);
+    
+    modal.querySelector('.slider-prev-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearInterval(autoSlideInterval);
+      prevSlide();
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    });
+    
+    modal.querySelector('.slider-next-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearInterval(autoSlideInterval);
+      nextSlide();
+      autoSlideInterval = setInterval(nextSlide, 4000);
+    });
+    
+    modal.querySelectorAll('.slider-indicator').forEach((ind, i) => {
+      ind.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearInterval(autoSlideInterval);
+        currentImageIndex = i;
+        updateSlider();
+        autoSlideInterval = setInterval(nextSlide, 4000);
+      });
+    });
   }
+  
+  const closeModal = () => {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+  
+  modal.querySelector('.modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
 
+function initNews(news) {
+  const container = document.getElementById('news-container');
+  if (!container || !news) return;
+  
+  container.innerHTML = news.slice(0, 3).map(item => `
+    <div class="card news-card" style="cursor: pointer;" data-news-id="${item.id}">
+      <img src="${item.image}" alt="${item.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--radius-lg) var(--radius-lg) 0 0;">
+      <div class="card-content">
+        <span style="display: inline-block; background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 0.5rem;">${item.category}</span>
+        <h3 class="card-title">${item.title}</h3>
+        <p class="card-text">${item.excerpt}</p>
+        <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem;">${new Date(item.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      </div>
+    </div>
+  `).join('');
+  
+  document.querySelectorAll('.news-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const newsId = card.dataset.newsId;
+      showNewsPopup(news.find(n => n.id == newsId));
+    });
+  });
+}
+
+function showNewsPopup(newsItem) {
+  if (!newsItem) return;
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  modal.innerHTML = `
+    <div class="modal-content" style="background: white; border-radius: var(--radius-xl); padding: 0; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; scrollbar-width: none; -ms-overflow-style: none;">
+      <style>
+        .modal-content::-webkit-scrollbar { display: none; }
+      </style>
+      <button class="modal-close" style="position: absolute; top: 1rem; right: 1rem; background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10;">&times;</button>
+      
+      <img src="${newsItem.image}" alt="${newsItem.title}" style="width: 100%; height: 400px; object-fit: cover; border-radius: var(--radius-xl) var(--radius-xl) 0 0;">
+      
+      <div style="padding: 2rem;">
+        <span style="display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: var(--radius-full); font-size: 0.875rem; margin-bottom: 1rem;">${newsItem.category}</span>
+        <h2 style="color: var(--primary); margin-bottom: 0.5rem;">${newsItem.title}</h2>
+        <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">${new Date(newsItem.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        <div style="line-height: 1.8; color: var(--text);">${newsItem.content}</div>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  setTimeout(() => modal.style.opacity = '1', 10);
+  document.body.style.overflow = 'hidden';
+  
+  const closeModal = () => {
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+  
+  modal.querySelector('.modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
+
+function initGallery(gallery) {
+  const container = document.getElementById('gallery-container');
+  if (!container || !gallery || !gallery.photos) return;
+  
+  container.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;';
+  container.innerHTML = gallery.photos.map(photo => `
+    <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); cursor: pointer;" data-image="${photo.image}" data-title="${photo.title}" data-description="${photo.description}">
+      <img src="${photo.image}" alt="${photo.title}" class="gallery-img" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s;">
+      <div class="gallery-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); color: white; padding: 1rem; opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF; font-size: 1.1rem;">${photo.title}</h4>
+        <p style="margin: 0; font-size: 0.875rem; color: #FFFFFF;">${photo.description}</p>
+      </div>
+    </div>
+  `).join('');
+  
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      item.querySelector('.gallery-overlay').style.opacity = '1';
+      item.querySelector('.gallery-img').style.transform = 'scale(1.1)';
+    });
+    item.addEventListener('mouseleave', () => {
+      item.querySelector('.gallery-overlay').style.opacity = '0';
+      item.querySelector('.gallery-img').style.transform = 'scale(1)';
+    });
+    item.addEventListener('click', () => {
+      openImageLightbox(item.dataset.image, item.dataset.title, item.dataset.description);
+    });
+  });
+}
+
+function openImageLightbox(src, title, description) {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox active';
+  lightbox.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  lightbox.innerHTML = `
+    <div class="lightbox-content" style="position: relative; max-width: 90%; max-height: 90%; text-align: center;">
+      <button class="lightbox-close" style="position: absolute; top: -3rem; right: 0; background: white; color: black; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10;">&times;</button>
+      <img src="${src}" alt="${title}" style="width: 100%; max-width: 1200px; aspect-ratio: 16/9; object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
+      <div style="background: rgba(0,0,0,0.8); color: white; padding: 1rem; margin-top: 1rem; border-radius: var(--radius-md); max-width: 1200px; margin-left: auto; margin-right: auto;">
+        <h3 style="margin: 0 0 0.5rem 0; color: #FFFFFF;">${title}</h3>
+        <p style="margin: 0; color: #FFFFFF;">${description}</p>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(lightbox);
+  setTimeout(() => lightbox.style.opacity = '1', 10);
+  document.body.style.overflow = 'hidden';
+  
+  const closeLightbox = () => {
+    lightbox.style.opacity = '0';
+    setTimeout(() => {
+      lightbox.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+  
+  lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function escHandler(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+      document.removeEventListener('keydown', escHandler);
+    }
+  });
+}
+
+function initTestimonials(testimonials) {
+  const container = document.getElementById('testimonial-container');
+  if (!container || !testimonials) return;
+  
+  if (testimonials.length === 0) return;
+  
+  let currentIndex = 0;
+  let autoSlideInterval;
+  
+  const isMobile = window.innerWidth <= 768;
+  const itemsPerView = isMobile ? 2 : 3;
+  
+  const renderTestimonials = () => {
+    const visibleTestimonials = [];
+    for (let i = 0; i < itemsPerView; i++) {
+      const index = (currentIndex + i) % testimonials.length;
+      visibleTestimonials.push(testimonials[index]);
+    }
+    
+    container.style.cssText = `display: grid; grid-template-columns: repeat(${itemsPerView}, 1fr); gap: 1.5rem; margin-bottom: 2rem; transition: opacity 0.3s ease;`;
+    
+    container.innerHTML = visibleTestimonials.map(testi => `
+      <div class="testimonial-card card" style="text-align: center; padding: 2rem;">
+        <img src="${testi.photo}" alt="${testi.name}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem; border: 3px solid var(--primary-soft);">
+        <h4 style="margin: 0 0 0.25rem 0; color: var(--primary); font-weight: 600;">${testi.name}</h4>
+        <p style="margin: 0 0 1rem 0; font-size: 0.875rem; color: var(--text-muted);">${testi.role}</p>
+        <div style="color: #FFB800; margin-bottom: 1rem; font-size: 1.2rem;">${'⭐'.repeat(Math.floor(testi.rating))}</div>
+        <p style="font-style: italic; line-height: 1.6; margin-bottom: 0.75rem; color: var(--text);">"${testi.comment}"</p>
+        <p style="font-size: 0.875rem; color: var(--text-muted);">${new Date(testi.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      </div>
+    `).join('');
+  };
+  
+  const nextSlide = () => {
+    container.style.opacity = '0.5';
+    setTimeout(() => {
+      currentIndex = (currentIndex + itemsPerView) % testimonials.length;
+      renderTestimonials();
+      container.style.opacity = '1';
+    }, 300);
+  };
+  
+  const prevSlide = () => {
+    container.style.opacity = '0.5';
+    setTimeout(() => {
+      currentIndex = (currentIndex - itemsPerView + testimonials.length) % testimonials.length;
+      renderTestimonials();
+      container.style.opacity = '1';
+    }, 300);
+  };
+  
+  renderTestimonials();
+  
+  if (testimonials.length > itemsPerView) {
+    const controlsDiv = document.createElement('div');
+    controlsDiv.style.cssText = 'display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem;';
+    controlsDiv.innerHTML = `
+      <button class="testi-prev" style="background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">&lsaquo;</button>
+      <div style="display: flex; gap: 0.5rem;">
+        ${testimonials.map((_, i) => `<div class="testi-dot" data-index="${i}" style="width: 10px; height: 10px; border-radius: 50%; background: ${i === currentIndex ? 'var(--primary)' : 'var(--neutral-300)'}; cursor: pointer; transition: all 0.3s;"></div>`).join('')}
+      </div>
+      <button class="testi-next" style="background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">&rsaquo;</button>
+    `;
+    container.parentElement.appendChild(controlsDiv);
+    
+    controlsDiv.querySelector('.testi-prev').addEventListener('click', () => {
+      clearInterval(autoSlideInterval);
+      prevSlide();
+      autoSlideInterval = setInterval(nextSlide, 6000);
+    });
+    
+    controlsDiv.querySelector('.testi-next').addEventListener('click', () => {
+      clearInterval(autoSlideInterval);
+      nextSlide();
+      autoSlideInterval = setInterval(nextSlide, 6000);
+    });
+    
+    controlsDiv.querySelectorAll('.testi-dot').forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        clearInterval(autoSlideInterval);
+        container.style.opacity = '0.5';
+        setTimeout(() => {
+          currentIndex = i;
+          renderTestimonials();
+          container.style.opacity = '1';
+          controlsDiv.querySelectorAll('.testi-dot').forEach((d, idx) => {
+            d.style.background = idx === i ? 'var(--primary)' : 'var(--neutral-300)';
+          });
+        }, 300);
+        autoSlideInterval = setInterval(nextSlide, 6000);
+      });
+    });
+    
+    autoSlideInterval = setInterval(nextSlide, 6000);
+  }
+  
+  window.addEventListener('resize', () => {
+    const newIsMobile = window.innerWidth <= 768;
+    if (newIsMobile !== isMobile) {
+      location.reload();
+    }
+  });
+}
+
+function initTelegramForm(telegramConfig) {
+  const form = document.getElementById('testimonial-form');
+  if (!form || !telegramConfig) return;
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    const message = `🌟 *Testimoni Baru dari Website*\n\n👤 *Nama:* ${data.name}\n📋 *Status:* ${data.role}\n⭐ *Rating:* ${data.rating}/5\n\n💬 *Testimoni:*\n${data.comment}`;
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Mengirim...';
+    submitBtn.disabled = true;
+    
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${telegramConfig.botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: telegramConfig.chatId,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      });
+      
+      if (response.ok) {
+        alert('✅ Terima kasih! Testimoni Anda berhasil dikirim.');
+        form.reset();
+      } else {
+        alert('❌ Maaf, terjadi kesalahan. Silakan coba lagi.');
+      }
+    } catch (err) {
+      console.error('Error sending to Telegram:', err);
+      alert('❌ Maaf, terjadi kesalahan. Silakan coba lagi nanti.');
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadSiteData);
+} else {
+  loadSiteData();
+}
