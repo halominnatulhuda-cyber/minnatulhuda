@@ -664,7 +664,7 @@ function showProgramPopup(program) {
   if (!program) return;
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
-  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  modal.styles.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   
   let currentImageIndex = 0;
   let autoSlideInterval;
@@ -802,7 +802,7 @@ function showNewsPopup(newsItem) {
   if (!newsItem) return;
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
-  modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  modal.styles.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   modal.innerHTML = `
     <div class="modal-content" style="background: white; border-radius: var(--radius-xl); padding: 0; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; scrollbar-width: none; -ms-overflow-style: none;">
       <style>
@@ -843,7 +843,7 @@ function initGallery(gallery) {
   const container = document.getElementById('gallery-container');
   if (!container || !gallery || !gallery.photos) return;
   
-  container.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;';
+  container.styles.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;';
   container.innerHTML = gallery.photos.map(photo => `
     <div class="gallery-item" style="position: relative; overflow: hidden; border-radius: var(--radius-lg); cursor: pointer;" data-image="${photo.image}" data-title="${photo.title}" data-description="${photo.description}">
       <img src="${photo.image}" alt="${photo.title}" class="gallery-img" style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s;">
@@ -872,7 +872,7 @@ function initGallery(gallery) {
 function openImageLightbox(src, title, description) {
   const lightbox = document.createElement('div');
   lightbox.className = 'lightbox active';
-  lightbox.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
+  lightbox.styles.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease;';
   lightbox.innerHTML = `
     <div class="lightbox-content" style="position: relative; max-width: 90%; max-height: 90%; text-align: center;">
       <button class="lightbox-close" style="position: absolute; top: -3rem; right: 0; background: white; color: black; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10;">&times;</button>
@@ -926,7 +926,7 @@ function initTestimonials(testimonials) {
       visibleTestimonials.push(testimonials[index]);
     }
     
-    container.style.cssText = `display: grid; grid-template-columns: repeat(${itemsPerView}, 1fr); gap: 1.5rem; margin-bottom: 2rem; transition: opacity 0.3s ease;`;
+    container.styles.cssText = `display: grid; grid-template-columns: repeat(${itemsPerView}, 1fr); gap: 1.5rem; margin-bottom: 2rem; transition: opacity 0.3s ease;`;
     
     container.innerHTML = visibleTestimonials.map(testi => `
       <div class="testimonial-card card" style="text-align: center; padding: 2rem;">
@@ -962,7 +962,7 @@ function initTestimonials(testimonials) {
   
   if (testimonials.length > itemsPerView) {
     const controlsDiv = document.createElement('div');
-    controlsDiv.style.cssText = 'display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem;';
+    controlsDiv.styles.cssText = 'display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem;';
     controlsDiv.innerHTML = `
       <button class="testi-prev" style="background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">&lsaquo;</button>
       <div style="display: flex; gap: 0.5rem;">
