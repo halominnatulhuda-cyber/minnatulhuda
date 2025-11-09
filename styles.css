@@ -9,10 +9,12 @@
 
 :root {
   /* Warna Utama - WAJIB PERSIS */
-  --primary: #0B6E4F;
-  --accent: #14A76C;
-  --soft: #E7F7EF;
-  --dark: #053826;
+  --primary: #205072;
+  --accent: #329D9C;
+  --soft: #CFF4D2;
+  --dark: #1A3F57;
+  --secondary: #56C596;    /* Hijau Cerah */
+  --secondary-light: #7BE495; /* Hijau Muda */
   --text: #0F172A;
   
   /* Warna Tambahan */

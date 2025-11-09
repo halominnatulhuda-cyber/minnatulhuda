@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -15,8 +16,10 @@
 <body>
   <!-- Skip to Content Link (Accessibility) -->
   <a href="#main-content" class="skip-to-content">Langsung ke konten utama</a>
+
   <!-- Mobile Overlay -->
   <div class="mobile-overlay"></div>
+
   <!-- Header & Navigation -->
   <header class="site-header">
     <div class="header-container">
@@ -26,11 +29,13 @@
         </svg>
         <span>Minnatul Huda</span>
       </a>
+
       <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg class="hamburger-icon" viewBox="0 0 24 24">
           <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
         </svg>
       </button>
+
       <nav class="main-nav" aria-label="Main navigation">
         <ul class="nav-list">
           <li class="nav-item"><a href="index.html" class="nav-link active">Beranda</a></li>
@@ -83,7 +88,14 @@
       </nav>
     </div>
   </header>
+
   <!-- Main Content -->
+  <!-- Statistics Section -->
+  <section class="section section-soft" id="statistik-section">
+    <div class="container">
+      <div class="grid grid-4" id="stats-container"></div>
+    </div>
+  </section>
   <main id="main-content">
     <section class="hero-slider">
       <div class="slider-track"></div>
@@ -93,19 +105,15 @@
         <button class="slider-btn slider-next" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
       </div>
     </section>
-<!-- Statistics Section -->
-  <section class="section section-soft" id="statistik-section">
-    <div class="container">
-      <div class="grid grid-4" id="stats-container"></div>
-    </div>
-  </section>
-  <section class="section">
+
+    <section class="section">
       <div class="container">
         <div class="section-header">
           <p class="section-subtitle">Program Unggulan</p>
           <h2 class="section-title">Program Pendidikan Kami</h2>
           <p class="section-description">Berbagai program pendidikan berkualitas yang memadukan nilai-nilai Islam dengan pendidikan formal modern</p>
         </div>
+
         <div class="grid grid-4" id="programs-container">
           <div class="card">
             <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
@@ -138,6 +146,7 @@
         </div>
       </div>
     </section>
+
     <section class="section section-soft">
   <!-- News Section -->
   <section class="section" id="berita-section">
@@ -186,16 +195,12 @@
             <textarea id="testi-comment" name="comment" rows="4" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);"></textarea>
           </div>
           <div class="form-group" style="margin-bottom: 1rem;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Rating</label>
-            <div class="star-rating" id="star-rating-container" role="radiogroup" aria-label="Rating" style="display: flex; gap: 0.5rem; font-size: 2rem; cursor: pointer;">
-              <span class="star" data-rating="1" role="radio" aria-checked="false" tabindex="0" style="color: #ddd; transition: color 0.2s; outline: none;">★</span>
-              <span class="star" data-rating="2" role="radio" aria-checked="false" tabindex="0" style="color: #ddd; transition: color 0.2s; outline: none;">★</span>
-              <span class="star" data-rating="3" role="radio" aria-checked="false" tabindex="0" style="color: #ddd; transition: color 0.2s; outline: none;">★</span>
-              <span class="star" data-rating="4" role="radio" aria-checked="false" tabindex="0" style="color: #ddd; transition: color 0.2s; outline: none;">★</span>
-              <span class="star" data-rating="5" role="radio" aria-checked="false" tabindex="0" style="color: #ddd; transition: color 0.2s; outline: none;">★</span>
-            </div>
-            <input type="hidden" id="testi-rating" name="rating" required value="">
-            <small style="display: block; margin-top: 0.5rem; color: var(--text-muted); font-size: 0.875rem;">Klik atau gunakan keyboard (Space/Enter) untuk rating (1-5)</small>
+            <label for="testi-rating" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Rating</label>
+            <select id="testi-rating" name="rating" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md);">
+              <option value="5">⭐⭐⭐⭐⭐ (Sangat Puas)</option>
+              <option value="4">⭐⭐⭐⭐ (Puas)</option>
+              <option value="3">⭐⭐⭐ (Cukup)</option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1rem;">Kirim Testimoni</button>
         </form>
@@ -222,6 +227,7 @@
       </div>
     </section>
   </main>
+
   <footer class="site-footer" id="kontak">
     <div class="footer-main">
       <div class="footer-section">
@@ -249,6 +255,7 @@
       <p>&copy; 2025 Pesantren & Sekolah Minnatul Huda. All rights reserved.</p>
     </div>
   </footer>
+
   <!-- Script untuk memuat data -->
   <script>
     fetch("data.json")
@@ -256,70 +263,10 @@
       .then(data => console.log("Data JSON berhasil dimuat:", data))
       .catch(err => console.warn(err));
   </script>
+
   <!-- Script utama -->
-  <!-- Script untuk Star Rating (Accessible - Fixed ARIA) -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const stars = document.querySelectorAll('.star');
-      const ratingInput = document.getElementById('testi-rating');
-      let selectedRating = 0;
-      function selectRating(rating) {
-        selectedRating = rating;
-        ratingInput.value = selectedRating;
-        updateStars(selectedRating);
-        
-        stars.forEach((s, idx) => {
-          if (idx === rating - 1) {
-            s.setAttribute('aria-checked', 'true');
-          } else {
-            s.setAttribute('aria-checked', 'false');
-          }
-        });
-      }
-
-      stars.forEach(star => {
-        star.addEventListener('click', function() {
-          selectRating(parseInt(this.dataset.rating));
-        });
-
-        star.addEventListener('keydown', function(e) {
-          if (e.key === ' ' || e.key === 'Enter') {
-            e.preventDefault();
-            selectRating(parseInt(this.dataset.rating));
-          }
-        });
-
-        star.addEventListener('mouseenter', function() {
-          const hoverRating = parseInt(this.dataset.rating);
-          updateStars(hoverRating);
-        });
-
-        star.addEventListener('focus', function() {
-          this.style.outline = '2px solid var(--primary)';
-          this.style.outlineOffset = '2px';
-        });
-
-        star.addEventListener('blur', function() {
-          this.style.outline = 'none';
-        });
-      });
-
-      document.getElementById('star-rating-container').addEventListener('mouseleave', function() {
-        updateStars(selectedRating);
-      });
-
-      function updateStars(rating) {
-        stars.forEach((star, index) => {
-          if (index < rating) {
-            star.style.color = '#FFB800';
-          } else {
-            star.style.color = '#ddd';
-          }
-        });
-      }
-    });
-  </script>
   <script src="script.js"></script>
   <script src="enhancers.js"></script>
 </body>
 </html>
+
