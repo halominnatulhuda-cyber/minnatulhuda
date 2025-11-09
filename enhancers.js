@@ -33,30 +33,31 @@
 
   async function loadPremiumIcons() {
     try {
-      const response = await fetch('ui-icons.json');
-      if (!response.ok) return;
-      
-      const data = await response.json();
-      const icons = data.icons;
-
-      document.querySelectorAll('[data-icon]').forEach(element => {
-        const iconKey = element.dataset.icon;
-        if (icons[iconKey]) {
-          if (element.tagName === 'IMG') {
-            element.src = icons[iconKey];
-            element.alt = iconKey + ' icon';
-            element.style.width = element.dataset.iconSize || '48px';
-            element.style.height = element.dataset.iconSize || '48px';
-          } else {
-            const img = document.createElement('img');
-            img.src = icons[iconKey];
-            img.alt = iconKey + ' icon';
-            img.style.width = element.dataset.iconSize || '48px';
-            img.style.height = element.dataset.iconSize || '48px';
-            element.appendChild(img);
-          }
-        }
-      });
+    return; // Disabled icon loading to prevent 404 errors
+//       // const response = await fetch('ui-icons.json');
+// //       if (!response.ok) return;
+// //       
+// //       const data = await response.json();
+// //       const icons = data.icons;
+// // 
+// //       document.querySelectorAll('[data-icon]').forEach(element => {
+// //         const iconKey = element.dataset.icon;
+// //         if (icons[iconKey]) {
+// //           if (element.tagName === 'IMG') {
+//             element.src = icons[iconKey];
+//             element.alt = iconKey + ' icon';
+//             element.style.width = element.dataset.iconSize || '48px';
+//             element.style.height = element.dataset.iconSize || '48px';
+//           } else {
+//             const img = document.createElement('img');
+//             img.src = icons[iconKey];
+//             img.alt = iconKey + ' icon';
+//             img.style.width = element.dataset.iconSize || '48px';
+//             img.style.height = element.dataset.iconSize || '48px';
+//             element.appendChild(img);
+//           }
+//         }
+//       });
 
       console.log('✅ Premium icons loaded successfully');
     } catch (error) {
