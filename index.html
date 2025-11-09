@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -17,10 +15,8 @@
 <body>
   <!-- Skip to Content Link (Accessibility) -->
   <a href="#main-content" class="skip-to-content">Langsung ke konten utama</a>
-
   <!-- Mobile Overlay -->
   <div class="mobile-overlay"></div>
-
   <!-- Header & Navigation -->
   <header class="site-header">
     <div class="header-container">
@@ -30,13 +26,11 @@
         </svg>
         <span>Minnatul Huda</span>
       </a>
-
       <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg class="hamburger-icon" viewBox="0 0 24 24">
           <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
         </svg>
       </button>
-
       <nav class="main-nav" aria-label="Main navigation">
         <ul class="nav-list">
           <li class="nav-item"><a href="index.html" class="nav-link active">Beranda</a></li>
@@ -89,18 +83,29 @@
       </nav>
     </div>
   </header>
-
   <!-- Main Content -->
-
-
-    <section class="section">
+  <main id="main-content">
+    <section class="hero-slider">
+      <div class="slider-track"></div>
+      <div class="slider-controls">
+        <button class="slider-btn slider-prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+        <div class="slider-pagination"></div>
+        <button class="slider-btn slider-next" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+      </div>
+    </section>
+<!-- Statistics Section -->
+  <section class="section section-soft" id="statistik-section">
+    <div class="container">
+      <div class="grid grid-4" id="stats-container"></div>
+    </div>
+  </section>
+  <section class="section">
       <div class="container">
         <div class="section-header">
           <p class="section-subtitle">Program Unggulan</p>
           <h2 class="section-title">Program Pendidikan Kami</h2>
           <p class="section-description">Berbagai program pendidikan berkualitas yang memadukan nilai-nilai Islam dengan pendidikan formal modern</p>
         </div>
-
         <div class="grid grid-4" id="programs-container">
           <div class="card">
             <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
@@ -133,25 +138,7 @@
         </div>
       </div>
     </section>
-
     <section class="section section-soft">
-
-        <!-- Statistics Section -->
-  <section class="section section-soft" id="statistik-section">
-    <div class="container">
-      <div class="grid grid-4" id="stats-container"></div>
-    </div>
-  </section>
-  <main id="main-content">
-    <section class="hero-slider">
-      <div class="slider-track"></div>
-      <div class="slider-controls">
-        <button class="slider-btn slider-prev" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
-        <div class="slider-pagination"></div>
-        <button class="slider-btn slider-next" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
-      </div>
-    </section>
-    
   <!-- News Section -->
   <section class="section" id="berita-section">
     <div class="container">
@@ -235,7 +222,6 @@
       </div>
     </section>
   </main>
-
   <footer class="site-footer" id="kontak">
     <div class="footer-main">
       <div class="footer-section">
@@ -263,7 +249,6 @@
       <p>&copy; 2025 Pesantren & Sekolah Minnatul Huda. All rights reserved.</p>
     </div>
   </footer>
-
   <!-- Script untuk memuat data -->
   <script>
     fetch("data.json")
@@ -271,7 +256,6 @@
       .then(data => console.log("Data JSON berhasil dimuat:", data))
       .catch(err => console.warn(err));
   </script>
-
   <!-- Script utama -->
   <!-- Script untuk Star Rating (Accessible - Fixed ARIA) -->
   <script>
@@ -279,7 +263,6 @@
       const stars = document.querySelectorAll('.star');
       const ratingInput = document.getElementById('testi-rating');
       let selectedRating = 0;
-
       function selectRating(rating) {
         selectedRating = rating;
         ratingInput.value = selectedRating;
@@ -336,9 +319,6 @@
       }
     });
   </script>
-
-
-
   <script src="script.js"></script>
   <script src="enhancers.js"></script>
 </body>
